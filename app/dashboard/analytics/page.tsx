@@ -498,7 +498,6 @@ export default function AnalyticsPage() {
           value={kpis.total}
           change={kpis.change}
           icon={<LeadsIcon className="w-6 h-6" />}
-          iconBg="bg-blue-100 text-blue-600"
         />
         <StatCard
           label="Qualifizierungsrate"
@@ -508,13 +507,11 @@ export default function AnalyticsPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           }
-          iconBg="bg-amber-100 text-amber-600"
         />
         <StatCard
           label="Conversion Rate"
           value={`${kpis.conversionRate.toFixed(1)}%`}
           icon={<TrendUpIcon className="w-6 h-6" />}
-          iconBg="bg-emerald-100 text-emerald-600"
         />
         <StatCard
           label="Gewonnen"
@@ -524,7 +521,6 @@ export default function AnalyticsPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
             </svg>
           }
-          iconBg="bg-purple-100 text-purple-600"
         />
       </div>
 
