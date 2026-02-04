@@ -1,0 +1,94 @@
+{
+  "scrapedAt": "2026-02-04T14:27:35.070Z",
+  "totalLeads": 8,
+  "leads": [
+    {
+      "name": "Dachdeckerei Schön GmbH",
+      "phone": "+498989674535",
+      "address": "Valentin-Linhof-Straße 10",
+      "website": "https://www.dachdeckerei-schoen.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-04T14:19:37.626Z",
+      "employees": "10-19",
+      "employeeSource": "wlw",
+      "email": "info@dachdeckerei-schoen.de"
+    },
+    {
+      "name": "Dachdeckerei Rummel GmbH",
+      "phone": "+4989778314",
+      "address": "80337 München",
+      "website": "https://rummel-gmbh.info/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-04T14:19:37.626Z",
+      "employees": "10",
+      "employeeSource": "website",
+      "email": "kontakt@rummel-gmbh.info"
+    },
+    {
+      "name": "Hintermeier Bedachungs GmbH",
+      "phone": "+498974881111",
+      "address": "81379 München",
+      "website": "https://www.hintermeier-dach.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-04T14:19:37.626Z",
+      "employees": "5-9",
+      "employeeSource": "wlw",
+      "email": "info@hintermeier-dach.de"
+    },
+    {
+      "name": "Dachdeckerei Krasniqi GmbH",
+      "phone": "+4981413551066",
+      "address": "Rueßstraße 43",
+      "website": "https://www.dachdeckerei-krasniqi.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-04T14:19:37.626Z",
+      "employees": "5-9",
+      "employeeSource": "wlw",
+      "email": "mail@dachdeckerei-krasniqi.de"
+    },
+    {
+      "name": "Nersinger Dachtechnik",
+      "phone": "+49898960640",
+      "address": "Bodenseestr. 139",
+      "website": "http://www.nersinger.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-04T14:19:37.628Z",
+      "employees": "15",
+      "employeeSource": "website",
+      "email": "info@nersinger.de"
+    },
+    {
+      "name": "Oliver Schmidt",
+      "phone": "+49895024699",
+      "address": "Artilleriestraße 3",
+      "website": "http://www.spengler-dachdecker.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-04T14:19:37.628Z",
+      "employees": "10-19",
+      "employeeSource": "wlw",
+      "email": null
+    },
+    {
+      "name": "Hörmann Dachtechnik GmbH",
+      "phone": "+49896700230",
+      "address": "Bayerwaldstraße 27",
+      "website": "https://www.hoermann-dachtechnik.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-04T14:19:37.628Z",
+      "employees": "10-19",
+      "employeeSource": "wlw",
+      "email": null
+    },
+    {
+      "name": "Dachdecker-Einkauf Süd eG",
+      "phone": "+49894200960",
+      "address": "Valentin-Linhof-Straße 15",
+      "website": null,
+      "source": "google_maps",
+      "scrapedAt": "2026-02-04T14:19:37.631Z",
+      "employees": "200-499",
+      "employeeSource": "wlw",
+      "email": null
+    }
+  ]
+}

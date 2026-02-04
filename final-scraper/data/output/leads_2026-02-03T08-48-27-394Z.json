@@ -1,0 +1,116 @@
+{
+  "scrapedAt": "2026-02-03T08:48:27.394Z",
+  "totalLeads": 10,
+  "leads": [
+    {
+      "name": "MunichMarketing",
+      "phone": "+498989641156",
+      "address": "Freibadstraße 30G",
+      "website": "http://www.munichmarketing.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:46:49.817Z",
+      "employees": null,
+      "employeeSource": null,
+      "email": "kontakt@munichmarketing.de"
+    },
+    {
+      "name": "WeLikeWeb GmbH",
+      "phone": "+498945689622",
+      "address": "Kolosseumstraße 1G",
+      "website": "https://www.welikeweb.de/?utm_source=Google+My+Business&utm_medium=GMB&utm_campaign=Link+Bio+GMB",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:46:49.819Z",
+      "employees": "1",
+      "employeeSource": "wlw",
+      "email": "info@welikeweb.de"
+    },
+    {
+      "name": "Münchner Marketing Akademie",
+      "phone": "+498921526796",
+      "address": "Marienplatz 17G",
+      "website": "https://www.akademie-marketing.com/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:46:49.819Z",
+      "employees": "1",
+      "employeeSource": "wlw",
+      "email": null
+    },
+    {
+      "name": "Webdesign München",
+      "phone": "+498924412673",
+      "address": null,
+      "website": "https://xn--webdesignmnchen-8vb.com/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:46:49.819Z",
+      "employees": "1",
+      "employeeSource": "wlw",
+      "email": null
+    },
+    {
+      "name": "MAXXmarketing GmbH",
+      "phone": "+49899292860",
+      "address": "Karlsplatz 7G",
+      "website": "https://www.seo-agentur.com/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:46:49.819Z",
+      "employees": "1",
+      "employeeSource": "wlw",
+      "email": "anfrage@seo-agentur.com"
+    },
+    {
+      "name": "Social Media Marketing München",
+      "phone": "+491702450456",
+      "address": "Tumblingerstraße 45G",
+      "website": "https://heiko-lindner.net/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:46:49.819Z",
+      "employees": "100",
+      "employeeSource": "website",
+      "email": "mail@heiko-lindner.net"
+    },
+    {
+      "name": "Immagine GmbH",
+      "phone": "+498933035110",
+      "address": "Lucile-Grahn-Straße 47G",
+      "website": "https://www.immagine.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:46:49.819Z",
+      "employees": "1",
+      "employeeSource": "wlw",
+      "email": "kontakt@immagine.de"
+    },
+    {
+      "name": "Grapevine München GmbH",
+      "phone": "+498958803170",
+      "address": "Tengstraße 9G",
+      "website": "https://www.grapevine.agency/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:46:49.819Z",
+      "employees": null,
+      "employeeSource": null,
+      "email": "hello@grapevine-frankfurt.de"
+    },
+    {
+      "name": "Lovemark Public Relations",
+      "phone": "+498974747070",
+      "address": "Prinzregentenstraße 67G",
+      "website": "http://www.lovemark-pr.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:46:49.819Z",
+      "employees": null,
+      "employeeSource": null,
+      "email": null
+    },
+    {
+      "name": "ipunkto GmbH",
+      "phone": null,
+      "address": "Auenstraße 90G",
+      "website": "https://www.seo-agentur-muenchen.org/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:46:49.819Z",
+      "employees": "1",
+      "employeeSource": "wlw",
+      "email": "info@seo-agentur-muenchen.org"
+    }
+  ]
+}

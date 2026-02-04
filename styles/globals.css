@@ -1,0 +1,431 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   LEAD INBOX - xAI STYLE WITH SHADOWS
+   Better component visibility with shadows
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --black: #000000;
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #111111;
+  --bg-elevated: #161616;
+  
+  --text-primary: #ffffff;
+  --text-secondary: #d4d4d4;
+  --text-tertiary: #a3a3a3;
+  --text-muted: #737373;
+  
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5), 0 8px 10px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 20px rgba(255, 255, 255, 0.05);
+  --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+}
+
+/* ===== BASE ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--black);
+  min-height: 100vh;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  color: #ffffff !important;
+  margin: 0;
+}
+
+p { 
+  margin: 0; 
+  color: #d4d4d4 !important; 
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+
+::selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* ============================================
+   LEAD ROW HOVER - SUBTLE EFFECT
+   ============================================ */
+
+/* Dashboard lead rows - subtle hover */
+a[href*="/leads/"] {
+  transition: background-color 0.15s ease !important;
+}
+
+a[href*="/leads/"]:hover {
+  background-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* Table rows */
+tbody tr {
+  transition: background-color 0.15s ease !important;
+}
+
+tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* Generic list items that are clickable */
+[role="button"]:not(button):hover,
+.cursor-pointer:hover {
+  background-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* ============================================
+   COLOR PICKER - ALLOW INLINE COLORS
+   ============================================ */
+
+/* Color picker buttons - DO NOT override background */
+.color-picker-btn,
+[data-color-picker],
+button[style*="background-color"] {
+  /* Allow inline styles to work */
+}
+
+/* Ensure color buttons show their color */
+.flex.flex-wrap.gap-3 > button[style],
+.flex.gap-3 > button[style],
+div[class*="gap-3"] > button[style*="backgroundColor"],
+div[class*="gap-2"] > button[style*="backgroundColor"] {
+  background-color: var(--btn-color, inherit) !important;
+}
+
+/* ============================================
+   TEXT OVERRIDES - ALL BRIGHTER
+   ============================================ */
+
+.text-gray-900, .text-slate-900,
+.text-gray-800, .text-slate-800,
+.text-neutral-900, .text-neutral-800 { 
+  color: #ffffff !important; 
+}
+
+.text-gray-700, .text-slate-700,
+.text-gray-600, .text-slate-600,
+.text-neutral-700, .text-neutral-600 { 
+  color: #d4d4d4 !important; 
+}
+
+.text-gray-500, .text-slate-500,
+.text-neutral-500 { 
+  color: #a3a3a3 !important; 
+}
+
+.text-gray-400, .text-slate-400,
+.text-neutral-400 { 
+  color: #8b8b8b !important; 
+}
+
+/* Background overrides */
+.bg-white { background-color: #0d0d0d !important; }
+.bg-gray-50, .bg-slate-50 { background-color: #050505 !important; }
+.bg-gray-100, .bg-slate-100 { background-color: #0a0a0a !important; }
+.bg-gray-200, .bg-slate-200 { background-color: #111111 !important; }
+
+/* Border overrides */
+.border-gray-200, .border-slate-200 { border-color: rgba(255, 255, 255, 0.08) !important; }
+.border-gray-300, .border-slate-300 { border-color: rgba(255, 255, 255, 0.12) !important; }
+
+/* ============================================
+   CARDS WITH SHADOWS
+   ============================================ */
+
+[class*="card"],
+[class*="rounded-lg"][class*="border"],
+[class*="rounded-xl"][class*="border"],
+.glass-card {
+  background: #0d0d0d !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: var(--shadow-md), var(--shadow-glow) !important;
+  transition: all 0.2s ease !important;
+}
+
+[class*="card"]:hover,
+[class*="rounded-lg"][class*="border"]:hover {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: var(--shadow-lg), var(--shadow-glow) !important;
+}
+
+[class*="modal"],
+[class*="dropdown"],
+[class*="popover"],
+[class*="menu"],
+[role="dialog"],
+[role="menu"],
+[role="listbox"] {
+  background: #111111 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: var(--shadow-xl) !important;
+}
+
+/* ============================================
+   BUTTON STYLES WITH SHADOWS
+   But NOT color picker buttons
+   ============================================ */
+
+button:not([style*="background-color"]):not(.color-picker-btn),
+[type="button"]:not([style*="background-color"]),
+[type="submit"]:not([style*="background-color"]),
+a[class*="btn"],
+[class*="btn-"],
+button[class*="bg-blue"],
+a[class*="bg-blue"],
+[class*="bg-blue-500"],
+[class*="bg-blue-600"] {
+  background: #0a0a0a !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 9999px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: all 0.15s ease !important;
+}
+
+button:not([style*="background-color"]):hover,
+[type="button"]:not([style*="background-color"]):hover,
+[type="submit"]:not([style*="background-color"]):hover,
+a[class*="btn"]:hover,
+[class*="btn-"]:hover {
+  background: #1a1a1a !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Ghost buttons */
+button[class*="ghost"],
+[class*="btn-ghost"] {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #d4d4d4 !important;
+}
+
+button[class*="ghost"]:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+}
+
+/* Icon buttons */
+button[class*="p-2"]:not([style*="background-color"]),
+button[class*="p-1"]:not([style*="background-color"]),
+a[class*="p-2"] {
+  border: none !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+button[class*="p-2"]:not([style*="background-color"]):hover,
+a[class*="p-2"]:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ============================================
+   INPUT & SELECT WITH SHADOWS
+   ============================================ */
+
+input, textarea {
+  background: #080808 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  box-shadow: var(--shadow-inset) !important;
+  transition: all 0.15s ease !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #666666 !important;
+}
+
+input:focus, textarea:focus {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  outline: none !important;
+  box-shadow: var(--shadow-inset), 0 0 0 2px rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Color input - special handling */
+input[type="color"] {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+select {
+  background: #0a0a0a !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 9999px !important;
+  color: #ffffff !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  padding: 10px 40px 10px 20px !important;
+  box-shadow: var(--shadow-sm) !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") !important;
+  background-position: right 12px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 16px !important;
+  cursor: pointer !important;
+}
+
+select:hover {
+  background-color: #141414 !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* ============================================
+   SIDEBAR WITH SHADOW
+   ============================================ */
+
+aside,
+[class*="sidebar"],
+nav[class*="fixed"] {
+  background: #050505 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ============================================
+   HEADER WITH SHADOW
+   ============================================ */
+
+header,
+[class*="header"],
+[class*="navbar"] {
+  background: rgba(5, 5, 5, 0.9) !important;
+  backdrop-filter: blur(10px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ============================================
+   BLUE COLOR OVERRIDES
+   ============================================ */
+
+.bg-blue-50 { background-color: rgba(255, 255, 255, 0.03) !important; }
+.bg-blue-100 { background-color: rgba(255, 255, 255, 0.05) !important; }
+.bg-blue-500, .bg-blue-600 { background-color: #0a0a0a !important; }
+
+.text-blue-400 { color: #b3b3b3 !important; }
+.text-blue-500, .text-blue-600, .text-blue-700 { color: #ffffff !important; }
+
+.border-blue-200 { border-color: rgba(255, 255, 255, 0.1) !important; }
+.border-blue-500, .border-blue-600 { border-color: rgba(255, 255, 255, 0.25) !important; }
+
+.hover\:bg-blue-50:hover { background-color: rgba(255, 255, 255, 0.03) !important; }
+.hover\:bg-blue-600:hover { background-color: #1a1a1a !important; }
+
+/* Focus states */
+*:focus {
+  outline: none !important;
+  --tw-ring-shadow: none !important;
+  --tw-ring-color: transparent !important;
+}
+
+*:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.2) !important;
+  outline-offset: 2px;
+}
+
+/* Hover states */
+.hover\:bg-gray-50:hover { background-color: rgba(255, 255, 255, 0.03) !important; }
+.hover\:bg-gray-100:hover { background-color: rgba(255, 255, 255, 0.05) !important; }
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+
+.nav-item {
+  color: #b3b3b3 !important;
+  transition: all 0.15s ease;
+}
+
+.nav-item:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.nav-item.active {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+/* ============================================
+   LABELS - BRIGHT
+   ============================================ */
+
+[class*="uppercase"],
+[class*="tracking-"],
+[class*="font-mono"]:not([class*="text-3xl"]):not([class*="text-2xl"]) {
+  color: #b3b3b3 !important;
+}
+
+.text-xs, .text-sm {
+  color: #a3a3a3 !important;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+.animate-slide-in { animation: slideIn 0.2s ease-out forwards; }
+.animate-scale-in { animation: scale-in 0.2s ease-out forwards; }

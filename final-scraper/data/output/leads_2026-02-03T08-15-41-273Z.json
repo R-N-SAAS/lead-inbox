@@ -1,0 +1,61 @@
+{
+  "scrapedAt": "2026-02-03T08:15:41.273Z",
+  "totalLeads": 5,
+  "leads": [
+    {
+      "name": "Malerbetrieb Jägerhuber",
+      "phone": "+498994424628",
+      "address": "Karlstraße 45G",
+      "website": "https://www.malerbetrieb-jaegerhuber.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:15:08.021Z",
+      "employees": null,
+      "employeeSource": null,
+      "email": "info@malerbetrieb-jaegerhuber.de"
+    },
+    {
+      "name": "Armagan Malerwerkstätte GmbH · Qualität im Detail. Seit 1990.",
+      "phone": "+498924880256",
+      "address": "Prinzregentenstraße 54G",
+      "website": "https://www.armagan-maler.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:15:08.024Z",
+      "employees": null,
+      "employeeSource": null,
+      "email": "meister@armagan-maler.de"
+    },
+    {
+      "name": "ANJO Malerei GmbH München Qualität und Kreativität",
+      "phone": "+498944900477",
+      "address": "Preysingstraße 54G",
+      "website": "https://www.anjo.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:15:08.024Z",
+      "employees": null,
+      "employeeSource": null,
+      "email": "anjo@anjo.de"
+    },
+    {
+      "name": "Malermeisterbetrieb Schwarz",
+      "phone": "+498996061003",
+      "address": "Ruth-Drexel-Straße 183G",
+      "website": "http://muenchen-maler.de/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:15:08.024Z",
+      "employees": null,
+      "employeeSource": null,
+      "email": "kontakt@muenchen-maler.de"
+    },
+    {
+      "name": "Malerbetrieb München",
+      "phone": "+4981212508484",
+      "address": "Ampfingstraße 30a",
+      "website": "http://www.xn--malerbetrieb-mnchen-jbc.eu/",
+      "source": "google_maps",
+      "scrapedAt": "2026-02-03T08:15:08.024Z",
+      "employees": null,
+      "employeeSource": null,
+      "email": "info@malerbetrieb-muenchen.eu"
+    }
+  ]
+}
