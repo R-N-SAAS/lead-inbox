@@ -2,430 +2,444 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ============================================
-   LEAD INBOX - xAI STYLE WITH SHADOWS
-   Better component visibility with shadows
-   ============================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
-
 :root {
-  --black: #000000;
-  --bg-primary: #000000;
-  --bg-secondary: #0a0a0a;
-  --bg-tertiary: #111111;
-  --bg-elevated: #161616;
-  
-  --text-primary: #ffffff;
-  --text-secondary: #d4d4d4;
-  --text-tertiary: #a3a3a3;
-  --text-muted: #737373;
-  
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-default: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.2);
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.3);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5), 0 8px 10px rgba(0, 0, 0, 0.3);
-  --shadow-glow: 0 0 20px rgba(255, 255, 255, 0.05);
-  --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.3);
-
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
-}
-
-/* ===== BASE ===== */
-*, *::before, *::after { box-sizing: border-box; }
-
-html {
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
 }
 
 body {
-  font-family: var(--font-sans);
-  background: var(--black);
-  min-height: 100vh;
-  color: var(--text-primary);
-  line-height: 1.5;
-  margin: 0;
+  color: rgb(var(--foreground-rgb));
+  background: #0a0a0a;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 500;
-  color: #ffffff !important;
-  margin: 0;
-}
-
-p { 
-  margin: 0; 
-  color: #d4d4d4 !important; 
-}
-
-a { color: inherit; text-decoration: none; }
-
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
-
-::selection {
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
 
 /* ============================================
-   LEAD ROW HOVER - SUBTLE EFFECT
+   LEAD INBOX - DARK THEME v5
+   Fixes: Top bar consistent height,
+          Stat cards equal size
    ============================================ */
 
-/* Dashboard lead rows - subtle hover */
-a[href*="/leads/"] {
-  transition: background-color 0.15s ease !important;
+/* === SIDEBAR - Darkest === */
+aside,
+[class*="sidebar"],
+[class*="w-64"],
+[class*="w-56"] {
+  background-color: #050505 !important;
 }
 
-a[href*="/leads/"]:hover {
-  background-color: rgba(255, 255, 255, 0.10) !important;
+/* === TOP BAR - Fixed height, consistent === */
+header.sticky.top-0,
+header.h-14 {
+  background-color: #050505 !important;
+  border-color: #1a1a1a !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  max-height: 56px !important;
+  box-sizing: border-box !important;
 }
 
-/* Table rows */
-tbody tr {
-  transition: background-color 0.15s ease !important;
+/* Header inner container - stretch full width */
+header.sticky.top-0 > div,
+header.h-14 > div {
+  height: 100% !important;
+  max-height: 56px !important;
 }
 
-tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.10) !important;
+/* === MAIN CONTENT - Lighter === */
+main,
+.main-content,
+[class*="flex-1"],
+[class*="flex-grow"],
+[class*="p-6"],
+[class*="p-8"] {
+  background-color: #141414 !important;
 }
 
-/* Generic list items that are clickable */
-[role="button"]:not(button):hover,
-.cursor-pointer:hover {
-  background-color: rgba(255, 255, 255, 0.10) !important;
-}
-
-/* ============================================
-   COLOR PICKER - ALLOW INLINE COLORS
-   ============================================ */
-
-/* Color picker buttons - DO NOT override background */
-.color-picker-btn,
-[data-color-picker],
-button[style*="background-color"] {
-  /* Allow inline styles to work */
-}
-
-/* Ensure color buttons show their color */
-.flex.flex-wrap.gap-3 > button[style],
-.flex.gap-3 > button[style],
-div[class*="gap-3"] > button[style*="backgroundColor"],
-div[class*="gap-2"] > button[style*="backgroundColor"] {
-  background-color: var(--btn-color, inherit) !important;
-}
-
-/* ============================================
-   TEXT OVERRIDES - ALL BRIGHTER
-   ============================================ */
-
-.text-gray-900, .text-slate-900,
-.text-gray-800, .text-slate-800,
-.text-neutral-900, .text-neutral-800 { 
-  color: #ffffff !important; 
-}
-
-.text-gray-700, .text-slate-700,
-.text-gray-600, .text-slate-600,
-.text-neutral-700, .text-neutral-600 { 
-  color: #d4d4d4 !important; 
-}
-
-.text-gray-500, .text-slate-500,
-.text-neutral-500 { 
-  color: #a3a3a3 !important; 
-}
-
-.text-gray-400, .text-slate-400,
-.text-neutral-400 { 
-  color: #8b8b8b !important; 
-}
-
-/* Background overrides */
-.bg-white { background-color: #0d0d0d !important; }
-.bg-gray-50, .bg-slate-50 { background-color: #050505 !important; }
-.bg-gray-100, .bg-slate-100 { background-color: #0a0a0a !important; }
-.bg-gray-200, .bg-slate-200 { background-color: #111111 !important; }
-
-/* Border overrides */
-.border-gray-200, .border-slate-200 { border-color: rgba(255, 255, 255, 0.08) !important; }
-.border-gray-300, .border-slate-300 { border-color: rgba(255, 255, 255, 0.12) !important; }
-
-/* ============================================
-   CARDS WITH SHADOWS
-   ============================================ */
-
+/* === CARDS & CONTAINERS === */
 [class*="card"],
-[class*="rounded-lg"][class*="border"],
-[class*="rounded-xl"][class*="border"],
-.glass-card {
-  background: #0d0d0d !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: var(--shadow-md), var(--shadow-glow) !important;
-  transition: all 0.2s ease !important;
+[class*="Card"],
+.rounded-lg,
+.rounded-xl {
+  background-color: #1a1a1a !important;
+  border-color: #252525 !important;
 }
 
-[class*="card"]:hover,
-[class*="rounded-lg"][class*="border"]:hover {
-  border-color: rgba(255, 255, 255, 0.15) !important;
-  box-shadow: var(--shadow-lg), var(--shadow-glow) !important;
+/* === STAT CARDS - Equal size === */
+.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 > div {
+  min-height: 140px !important;
+  max-height: 140px !important;
+  height: 140px !important;
+  overflow: hidden !important;
 }
 
-[class*="modal"],
+/* Stat card inner - fixed layout */
+.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 > div .rounded-lg {
+  height: 100% !important;
+  min-height: 140px !important;
+  max-height: 140px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  padding: 20px 24px !important;
+  box-sizing: border-box !important;
+}
+
+/* Stat card bg - consistent dark background */
+.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 .bg-\[\#0a0a0a\] {
+  background-color: #0a0a0a !important;
+  height: 100% !important;
+}
+
+/* Stat card value - consistent spacing */
+.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 .font-mono.text-3xl {
+  margin-top: 8px !important;
+  margin-bottom: 0 !important;
+  line-height: 1.2 !important;
+}
+
+/* Stat card change/conversion text - compact */
+.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 .font-mono.text-xs {
+  margin-top: 6px !important;
+}
+
+/* === TABLE & LIST === */
+table,
+tbody,
+thead {
+  background-color: transparent !important;
+}
+
+thead tr,
+th {
+  background-color: #141414 !important;
+  border-color: #252525 !important;
+}
+
+tbody tr {
+  background-color: transparent !important;
+  border-color: #1f1f1f !important;
+}
+
+tbody tr:hover,
+a[href*="/leads/"]:hover {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* === INPUTS & SEARCH === */
+input,
+textarea,
+select,
+[class*="input"],
+[class*="Input"] {
+  background-color: #0a0a0a !important;
+  border-color: #252525 !important;
+  color: #e5e5e5 !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #404040 !important;
+  outline: none !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #666 !important;
+}
+
+/* === BUTTONS === */
+button[class*="primary"],
+[class*="btn-primary"],
+.bg-emerald-500,
+.bg-emerald-600 {
+  background-color: #10b981 !important;
+}
+
+button[class*="ghost"],
+button[class*="secondary"] {
+  background-color: transparent !important;
+  border-color: #303030 !important;
+}
+
+button[class*="ghost"]:hover,
+button[class*="secondary"]:hover {
+  background-color: #252525 !important;
+}
+
+/* === DROPDOWNS === */
 [class*="dropdown"],
-[class*="popover"],
 [class*="menu"],
-[role="dialog"],
+[class*="popover"],
 [role="menu"],
 [role="listbox"] {
-  background: #111111 !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: var(--shadow-xl) !important;
+  background-color: #111111 !important;
+  border-color: #252525 !important;
 }
 
-/* ============================================
-   BUTTON STYLES WITH SHADOWS
-   But NOT color picker buttons
-   ============================================ */
+[role="menuitem"]:hover,
+[role="option"]:hover {
+  background-color: #1f1f1f !important;
+}
 
-button:not([style*="background-color"]):not(.color-picker-btn),
-[type="button"]:not([style*="background-color"]),
-[type="submit"]:not([style*="background-color"]),
-a[class*="btn"],
-[class*="btn-"],
-button[class*="bg-blue"],
-a[class*="bg-blue"],
-[class*="bg-blue-500"],
-[class*="bg-blue-600"] {
-  background: #0a0a0a !important;
+/* === MODALS === */
+[class*="modal"],
+[class*="dialog"],
+[role="dialog"] {
+  background-color: #111111 !important;
+  border-color: #252525 !important;
+}
+
+[class*="overlay"],
+[class*="backdrop"] {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* === BADGES & STATUS - STRONGER TEXT === */
+[class*="badge"],
+[class*="tag"],
+[class*="Badge"],
+[class*="Tag"],
+span[class*="rounded-full"],
+span[class*="rounded-md"],
+span[class*="px-2"],
+span[class*="px-3"] {
+  background-color: #252525 !important;
+  border-color: #404040 !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-radius: 9999px !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 12px !important;
   font-weight: 500 !important;
-  letter-spacing: 0.06em !important;
-  text-transform: uppercase !important;
-  box-shadow: var(--shadow-sm) !important;
-  transition: all 0.15s ease !important;
+  opacity: 1 !important;
 }
 
-button:not([style*="background-color"]):hover,
-[type="button"]:not([style*="background-color"]):hover,
-[type="submit"]:not([style*="background-color"]):hover,
-a[class*="btn"]:hover,
-[class*="btn-"]:hover {
-  background: #1a1a1a !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  box-shadow: var(--shadow-md) !important;
+/* Scraper badge - green */
+.bg-emerald-500\/10,
+[class*="scraper"],
+span[class*="emerald"],
+span[class*="green"] {
+  background-color: rgba(16, 185, 129, 0.25) !important;
+  color: #34d399 !important;
+  font-weight: 500 !important;
 }
 
-/* Ghost buttons */
-button[class*="ghost"],
-[class*="btn-ghost"] {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+/* Manuell badge - gray */
+span[class*="gray"],
+span[class*="slate"] {
+  background-color: #303030 !important;
+  color: #e5e5e5 !important;
+  font-weight: 500 !important;
+}
+
+/* Neu badge - blue */
+span[class*="blue"] {
+  background-color: rgba(59, 130, 246, 0.25) !important;
+  color: #60a5fa !important;
+  font-weight: 500 !important;
+}
+
+/* Status text general */
+.text-xs,
+.text-sm {
+  opacity: 1 !important;
+}
+
+/* === TEXT - NEVER BLACK ON DARK === */
+h1, h2, h3, h4, h5, h6 {
+  color: #f5f5f5 !important;
+}
+
+p, span, label, a, li, td, th, div {
+  color: inherit;
+}
+
+/* Override all slate/gray text classes that would be black/dark */
+.text-slate-900,
+.text-slate-800,
+.text-slate-700,
+.text-gray-900,
+.text-gray-800,
+.text-gray-700,
+.text-black,
+[class*="text-slate-9"],
+[class*="text-slate-8"],
+[class*="text-slate-7"],
+[class*="text-gray-9"],
+[class*="text-gray-8"],
+[class*="text-gray-7"] {
+  color: #f0f0f0 !important;
+}
+
+.text-slate-600,
+.text-slate-500,
+.text-gray-600,
+.text-gray-500,
+[class*="text-slate-6"],
+[class*="text-slate-5"],
+[class*="text-gray-6"],
+[class*="text-gray-5"] {
+  color: #a0a0a0 !important;
+}
+
+.text-slate-400,
+.text-slate-300,
+.text-gray-400,
+.text-gray-300 {
+  color: #888888 !important;
+}
+
+/* Links */
+a, .text-blue-600, .text-blue-700,
+[class*="text-blue-6"],
+[class*="text-blue-7"] {
+  color: #60a5fa !important;
+}
+
+a:hover {
+  color: #93bbfd !important;
+}
+
+/* Table text */
+table th {
+  color: #888888 !important;
+}
+
+table td {
   color: #d4d4d4 !important;
 }
 
-button[class*="ghost"]:hover {
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: #ffffff !important;
+table td a,
+table td p,
+table td span {
+  color: inherit !important;
 }
 
-/* Icon buttons */
-button[class*="p-2"]:not([style*="background-color"]),
-button[class*="p-1"]:not([style*="background-color"]),
-a[class*="p-2"] {
-  border: none !important;
-  border-radius: 8px !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-button[class*="p-2"]:not([style*="background-color"]):hover,
-a[class*="p-2"]:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-}
-
-/* ============================================
-   INPUT & SELECT WITH SHADOWS
-   ============================================ */
-
-input, textarea {
-  background: #080808 !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 8px !important;
-  color: #ffffff !important;
-  font-size: 14px !important;
-  box-shadow: var(--shadow-inset) !important;
-  transition: all 0.15s ease !important;
-}
-
-input::placeholder, textarea::placeholder {
-  color: #666666 !important;
-}
-
-input:focus, textarea:focus {
-  border-color: rgba(255, 255, 255, 0.25) !important;
-  outline: none !important;
-  box-shadow: var(--shadow-inset), 0 0 0 2px rgba(255, 255, 255, 0.05) !important;
-}
-
-/* Color input - special handling */
-input[type="color"] {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-}
-
-select {
-  background: #0a0a0a !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-radius: 9999px !important;
-  color: #ffffff !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.06em !important;
-  text-transform: uppercase !important;
-  padding: 10px 40px 10px 20px !important;
-  box-shadow: var(--shadow-sm) !important;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") !important;
-  background-position: right 12px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 16px !important;
-  cursor: pointer !important;
-}
-
-select:hover {
-  background-color: #141414 !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  box-shadow: var(--shadow-md) !important;
-}
-
-/* ============================================
-   SIDEBAR WITH SHADOW
-   ============================================ */
-
-aside,
-[class*="sidebar"],
-nav[class*="fixed"] {
-  background: #050505 !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* ============================================
-   HEADER WITH SHADOW
-   ============================================ */
-
-header,
-[class*="header"],
-[class*="navbar"] {
-  background: rgba(5, 5, 5, 0.9) !important;
-  backdrop-filter: blur(10px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
-}
-
-/* ============================================
-   BLUE COLOR OVERRIDES
-   ============================================ */
-
-.bg-blue-50 { background-color: rgba(255, 255, 255, 0.03) !important; }
-.bg-blue-100 { background-color: rgba(255, 255, 255, 0.05) !important; }
-.bg-blue-500, .bg-blue-600 { background-color: #0a0a0a !important; }
-
-.text-blue-400 { color: #b3b3b3 !important; }
-.text-blue-500, .text-blue-600, .text-blue-700 { color: #ffffff !important; }
-
-.border-blue-200 { border-color: rgba(255, 255, 255, 0.1) !important; }
-.border-blue-500, .border-blue-600 { border-color: rgba(255, 255, 255, 0.25) !important; }
-
-.hover\:bg-blue-50:hover { background-color: rgba(255, 255, 255, 0.03) !important; }
-.hover\:bg-blue-600:hover { background-color: #1a1a1a !important; }
-
-/* Focus states */
-*:focus {
-  outline: none !important;
-  --tw-ring-shadow: none !important;
-  --tw-ring-color: transparent !important;
-}
-
-*:focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.2) !important;
-  outline-offset: 2px;
-}
-
-/* Hover states */
-.hover\:bg-gray-50:hover { background-color: rgba(255, 255, 255, 0.03) !important; }
-.hover\:bg-gray-100:hover { background-color: rgba(255, 255, 255, 0.05) !important; }
-
-/* ============================================
-   NAVIGATION
-   ============================================ */
-
-.nav-item {
-  color: #b3b3b3 !important;
-  transition: all 0.15s ease;
-}
-
-.nav-item:hover {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.04) !important;
-}
-
-.nav-item.active {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: var(--shadow-sm) !important;
-}
-
-/* ============================================
-   LABELS - BRIGHT
-   ============================================ */
-
-[class*="uppercase"],
-[class*="tracking-"],
-[class*="font-mono"]:not([class*="text-3xl"]):not([class*="text-2xl"]) {
+/* General body text */
+p, span, label {
   color: #b3b3b3 !important;
 }
 
-.text-xs, .text-sm {
-  color: #a3a3a3 !important;
+/* Ensure names/titles are always bright white */
+.font-medium,
+.font-semibold,
+.font-bold {
+  color: #f0f0f0 !important;
 }
 
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+[class*="muted"],
+small {
+  color: #808080 !important;
 }
 
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(-8px); }
-  to { opacity: 1; transform: translateX(0); }
+/* Emerald/green text should stay green */
+.text-emerald-400, .text-emerald-500, .text-emerald-600,
+[class*="text-emerald"] {
+  color: #34d399 !important;
 }
 
-@keyframes scale-in {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+/* Red text should stay red */
+.text-red-400, .text-red-500,
+[class*="text-red"] {
+  color: #f87171 !important;
 }
 
-.animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-.animate-slide-in { animation: slideIn 0.2s ease-out forwards; }
-.animate-scale-in { animation: scale-in 0.2s ease-out forwards; }
+/* White text stays white */
+.text-white {
+  color: #ffffff !important;
+}
+
+/* Placeholder text */
+::placeholder {
+  color: #666 !important;
+}
+
+/* Dark background utility classes forced light */
+.bg-slate-100, .bg-slate-50, .bg-gray-100, .bg-gray-50,
+[class*="bg-slate-1"], [class*="bg-slate-5"],
+[class*="bg-gray-1"], [class*="bg-gray-5"] {
+  background-color: #1a1a1a !important;
+}
+
+/* Progress bar backgrounds */
+.bg-slate-100.rounded-full,
+.h-2.bg-slate-100 {
+  background-color: #252525 !important;
+}
+
+/* Icon background overrides */
+.bg-blue-50, .bg-cyan-50, .bg-amber-50, .bg-emerald-50,
+.bg-purple-50, .bg-blue-100, .bg-cyan-100, .bg-amber-100,
+.bg-emerald-100, .bg-purple-100,
+[class*="bg-blue-5"], [class*="bg-cyan-5"], [class*="bg-amber-5"],
+[class*="bg-blue-1"], [class*="bg-cyan-1"], [class*="bg-amber-1"],
+[class*="bg-emerald-1"], [class*="bg-purple-1"] {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Icon text colors in stat cards */
+.text-blue-600, .text-cyan-600, .text-amber-600,
+.text-emerald-600, .text-purple-600 {
+  color: #a0a0a0 !important;
+}
+
+/* Hover states on light backgrounds */
+.hover\:bg-slate-50\/50:hover,
+.hover\:bg-blue-50\/30:hover,
+[class*="hover:bg-slate"]:hover,
+[class*="hover:bg-blue-5"]:hover {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Border overrides for light borders */
+.border-slate-100, .border-slate-200, .border-slate-300,
+[class*="border-slate-1"], [class*="border-slate-2"],
+.divide-slate-100 > * + * {
+  border-color: #252525 !important;
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* === BORDERS === */
+hr,
+[class*="divider"] {
+  border-color: #252525 !important;
+}
+
+/* === CAMPAIGN ACTIVE === */
+[class*="campaign"][class*="active"],
+.bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+}
+
+/* === PROGRESS BAR === */
+[class*="progress"],
+[role="progressbar"] {
+  background-color: #1a1a1a !important;
+}
+
+[class*="progress"] > div,
+[role="progressbar"] > div {
+  background-color: #10b981 !important;
+}

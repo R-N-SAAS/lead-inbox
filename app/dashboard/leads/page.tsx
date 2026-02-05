@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import { 
@@ -48,6 +48,75 @@ const SOURCE_OPTIONS = [
   { value: 'api', label: 'API' },
   { value: 'import', label: 'Import' },
 ];
+
+// ============================================
+// ADD LEAD DROPDOWN BUTTON
+// ============================================
+
+function AddLeadDropdown({ onNewLead }: { onNewLead: () => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative" ref={ref}>
+      <div className="flex">
+        {/* Main button */}
+        <button
+          onClick={onNewLead}
+          className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-l-lg transition-colors"
+        >
+          <PlusIcon className="w-4 h-4" />
+          Neuer Lead
+        </button>
+        {/* Dropdown toggle */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="flex items-center px-2 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white border-l border-emerald-500 rounded-r-lg transition-colors"
+        >
+          <svg className={cn('w-4 h-4 transition-transform', open && 'rotate-180')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Dropdown menu */}
+      {open && (
+        <div className="absolute right-0 mt-2 w-52 bg-[#0a0a0a] border border-white/10 rounded-lg overflow-hidden shadow-xl z-50 animate-fade-in">
+          <button
+            onClick={() => {
+              onNewLead();
+              setOpen(false);
+            }}
+            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/[0.04] transition-colors"
+          >
+            <svg className="w-4 h-4 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Manuell erstellen
+          </button>
+          <Link
+            href="/dashboard/leads/import"
+            onClick={() => setOpen(false)}
+            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/[0.04] transition-colors border-t border-white/[0.06]"
+          >
+            <svg className="w-4 h-4 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+            </svg>
+            CSV / Excel importieren
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+}
 
 // ============================================
 // LEADS PAGE COMPONENT
@@ -241,12 +310,7 @@ export default function LeadsPage() {
           >
             <span className="hidden sm:inline">Aktualisieren</span>
           </Button>
-          <Button
-            onClick={() => setShowNewLeadModal(true)}
-            icon={<PlusIcon className="w-4 h-4" />}
-          >
-            Neuer Lead
-          </Button>
+          <AddLeadDropdown onNewLead={() => setShowNewLeadModal(true)} />
         </div>
       </div>
 
@@ -375,7 +439,7 @@ export default function LeadsPage() {
             description={
               search || statusFilter !== 'all' || sourceFilter !== 'all'
                 ? 'Versuchen Sie andere Filterkriterien'
-                : 'Erstellen Sie Ihren ersten Lead oder richten Sie das Widget ein'
+                : 'Erstellen Sie Ihren ersten Lead oder importieren Sie bestehende Kontakte'
             }
             action={
               !search && statusFilter === 'all' && sourceFilter === 'all' && (
@@ -383,8 +447,8 @@ export default function LeadsPage() {
                   <Button variant="secondary" onClick={() => setShowNewLeadModal(true)}>
                     Lead erstellen
                   </Button>
-                  <Link href="/dashboard/widget">
-                    <Button>Widget einrichten</Button>
+                  <Link href="/dashboard/leads/import">
+                    <Button>Leads importieren</Button>
                   </Link>
                 </div>
               )

@@ -527,7 +527,7 @@ export default function AnalyticsPage() {
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Leads Over Time */}
-        <Card variant="glass">
+        <Card variant="default">
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-semibold text-slate-900">Lead-Entwicklung</h3>
             <span className="text-sm text-slate-500">
@@ -544,7 +544,7 @@ export default function AnalyticsPage() {
         </Card>
 
         {/* Conversion Funnel */}
-        <Card variant="glass">
+        <Card variant="default">
           <h3 className="font-semibold text-slate-900 mb-6">Conversion Funnel</h3>
           {kpis.total > 0 ? (
             <FunnelChart data={funnelData} />
@@ -559,7 +559,7 @@ export default function AnalyticsPage() {
       {/* Charts Row 2 */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Status Distribution */}
-        <Card variant="glass">
+        <Card variant="default">
           <h3 className="font-semibold text-slate-900 mb-6">Status-Verteilung</h3>
           <div className="flex items-center justify-center">
             {statusDistribution.length > 0 ? (
@@ -588,7 +588,7 @@ export default function AnalyticsPage() {
         </Card>
 
         {/* Source Distribution */}
-        <Card variant="glass">
+        <Card variant="default">
           <h3 className="font-semibold text-slate-900 mb-6">Lead-Quellen</h3>
           {sourceDistribution.length > 0 ? (
             <BarChart data={sourceDistribution} height={200} />
@@ -600,7 +600,7 @@ export default function AnalyticsPage() {
         </Card>
 
         {/* Campaign Performance */}
-        <Card variant="glass">
+        <Card variant="default">
           <h3 className="font-semibold text-slate-900 mb-6">Kampagnen-Performance</h3>
           <div className="space-y-4">
             <MetricRow
@@ -633,7 +633,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Top Leads Table */}
-      <Card variant="glass">
+      <Card variant="default">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-semibold text-slate-900">Neueste Leads</h3>
           <Button variant="ghost" size="sm" href="/dashboard/leads">

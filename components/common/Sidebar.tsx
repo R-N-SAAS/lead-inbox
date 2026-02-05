@@ -195,9 +195,9 @@ function SidebarContent({ onLogout, onItemClick }: SidebarContentProps) {
   return (
     <>
       {/* Logo */}
-      <div className="h-16 px-5 flex items-center gap-3 border-b border-white/[0.06]">
-        <Logo size={32} />
-        <span className="font-semibold text-white text-base">Lead Inbox</span>
+      <div className="h-16 px-5 flex items-center border-b border-white/[0.06]">
+        
+        <span className="font-semibold text-white text-lg tracking-tight">Lead Inbox</span>
       </div>
 
       {/* Navigation */}
