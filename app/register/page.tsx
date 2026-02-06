@@ -99,7 +99,7 @@ export default function RegisterPage() {
         {/* Logo */}
         <div className="flex items-center justify-center gap-3 mb-8">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-            <InboxIcon className="w-6 h-6 text-white" />
+            <InboxIcon className="w-6 h-6 text-slate-900" />
           </div>
           <div>
             <span className="font-bold text-slate-900 text-xl">Lead Inbox</span>

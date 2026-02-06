@@ -144,9 +144,9 @@ export default function OnboardingPage() {
                   className={cn(
                     'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all',
                     index < currentStep
-                      ? 'bg-blue-500 text-white'
+                      ? 'bg-blue-500 text-slate-900'
                       : index === currentStep
-                      ? 'bg-blue-500 text-white ring-4 ring-blue-100'
+                      ? 'bg-blue-500 text-slate-900 ring-4 ring-blue-100'
                       : 'bg-slate-200 text-slate-400'
                   )}
                 >
@@ -173,9 +173,9 @@ export default function OnboardingPage() {
         {/* Card */}
         <Card variant="solid" padding="none" className="shadow-xl overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-8 text-white">
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-8 text-slate-900">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
                 <InboxIcon className="w-6 h-6" />
               </div>
               <span className="font-bold text-xl">Lead Inbox</span>

@@ -201,11 +201,11 @@ export default function LeadDetailPage() {
       </div>
 
       {/* Header Card */}
-      <Card variant="glass" padding="lg">
+      <Card variant="default" padding="lg">
         <div className="flex flex-col lg:flex-row lg:items-start gap-6">
           {/* Avatar & Basic Info */}
           <div className="flex items-start gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-blue-500/25 flex-shrink-0">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-slate-900 text-xl font-bold shadow-lg shadow-blue-500/25 flex-shrink-0">
               {getInitials(lead.name, lead.email)}
             </div>
             <div>
@@ -431,7 +431,7 @@ export default function LeadDetailPage() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Timeline Card */}
-          <Card variant="glass">
+          <Card variant="default">
             <h3 className="font-semibold text-slate-900 mb-4">Timeline</h3>
             <div className="space-y-4">
               <TimelineItem
@@ -464,7 +464,7 @@ export default function LeadDetailPage() {
           </Card>
 
           {/* Add to Campaign Card */}
-          <Card variant="glass">
+          <Card variant="default">
             <h3 className="font-semibold text-slate-900 mb-4">Kampagnen</h3>
             <p className="text-sm text-slate-500 mb-4">
               Fügen Sie diesen Lead zu einer E-Mail-Kampagne hinzu

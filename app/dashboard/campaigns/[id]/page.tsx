@@ -167,10 +167,10 @@ export default function CampaignDetailPage() {
       </div>
 
       {/* Header */}
-      <Card variant="glass" padding="lg">
+      <Card variant="default" padding="lg">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start gap-4">
-            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white flex-shrink-0">
+            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-slate-900 flex-shrink-0">
               <MailIcon className="w-7 h-7" />
             </div>
             <div>
@@ -235,7 +235,7 @@ export default function CampaignDetailPage() {
 
       {/* Progress Bar for Active Campaigns */}
       {campaign.status === 'active' && stats.total_recipients > 0 && (
-        <Card variant="glass" padding="md">
+        <Card variant="default" padding="md">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-slate-700">Versand-Fortschritt</span>
             <span className="text-sm text-slate-500">
@@ -266,7 +266,7 @@ export default function CampaignDetailPage() {
 
         {/* Recipients Tab */}
         <TabsContent value="recipients" className="mt-6">
-          <Card variant="glass" padding="none">
+          <Card variant="default" padding="none">
             {recipients.length === 0 ? (
               <EmptyState
                 title="Keine Empfänger"
@@ -344,7 +344,7 @@ export default function CampaignDetailPage() {
 
         {/* Content Tab */}
         <TabsContent value="content" className="mt-6">
-          <Card variant="glass">
+          <Card variant="default">
             <h3 className="font-semibold text-slate-900 mb-4">E-Mail-Inhalt</h3>
             <div className="border border-slate-200 rounded-xl overflow-hidden">
               <div className="bg-slate-100 px-4 py-3 border-b border-slate-200 text-sm">
@@ -364,7 +364,7 @@ export default function CampaignDetailPage() {
 
         {/* Settings Tab */}
         <TabsContent value="settings" className="mt-6">
-          <Card variant="glass">
+          <Card variant="default">
             <h3 className="font-semibold text-slate-900 mb-4">Kampagnen-Einstellungen</h3>
             <dl className="grid sm:grid-cols-2 gap-6">
               <div>
@@ -434,7 +434,7 @@ function StatCard({
   highlight?: boolean;
 }) {
   return (
-    <Card variant="glass" padding="md">
+    <Card variant="default" padding="md">
       <p className="text-xs text-slate-500 uppercase tracking-wider">{label}</p>
       <p className={cn(
         'text-2xl font-bold mt-1',

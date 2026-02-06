@@ -4,11 +4,11 @@ import { HTMLAttributes, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
 // ============================================
-// CARD - xAI STYLE
+// CARD - LIGHT THEME
 // ============================================
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'elevated' | 'outline';
+  variant?: 'default' | 'elevated' | 'outline' | 'glass';
   padding?: 'none' | 'sm' | 'md' | 'lg';
   hover?: boolean;
   children: ReactNode;
@@ -23,9 +23,10 @@ export default function Card({
   ...props
 }: CardProps) {
   const variants = {
-    default: 'bg-[#0a0a0a] border border-white/[0.1]',
-    elevated: 'bg-[#111111] border border-white/[0.1]',
-    outline: 'bg-transparent border border-white/[0.15]',
+    default: 'bg-white border border-slate-200 shadow-sm',
+    elevated: 'bg-white border border-slate-200 shadow-md',
+    outline: 'bg-white border border-slate-200',
+    glass: 'bg-white border border-slate-200 shadow-sm',
   };
 
   const paddings = {
@@ -36,13 +37,13 @@ export default function Card({
   };
 
   const hoverStyles = hover
-    ? 'transition-all duration-200 hover:border-white/[0.2] cursor-pointer'
+    ? 'transition-all duration-200 hover:shadow-md hover:border-slate-300 cursor-pointer'
     : '';
 
   return (
     <div
       className={cn(
-        'rounded-lg',
+        'rounded-xl',
         variants[variant],
         paddings[padding],
         hoverStyles,
@@ -56,7 +57,7 @@ export default function Card({
 }
 
 // ============================================
-// CARD HEADER - xAI STYLE
+// CARD HEADER
 // ============================================
 
 export interface CardHeaderProps {
@@ -73,18 +74,18 @@ export function CardHeader({ title, subtitle, label, icon, action, className }: 
     <div className={cn('flex items-start justify-between mb-6', className)}>
       <div className="flex items-start gap-3">
         {icon && (
-          <div className="flex-shrink-0 p-2 rounded-md bg-white/[0.06] text-white">
+          <div className="flex-shrink-0 p-2 rounded-lg bg-slate-100 text-slate-600">
             {icon}
           </div>
         )}
         <div>
           {label && (
-            <span className="font-mono text-[11px] text-neutral-400 tracking-widest uppercase mb-1 block">
-              [ {label} ]
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1 block">
+              {label}
             </span>
           )}
-          <h3 className="text-base font-medium text-white">{title}</h3>
-          {subtitle && <p className="text-sm text-neutral-500 mt-0.5">{subtitle}</p>}
+          <h3 className="text-base font-semibold text-slate-900">{title}</h3>
+          {subtitle && <p className="text-sm text-slate-500 mt-0.5">{subtitle}</p>}
         </div>
       </div>
       {action && <div className="flex-shrink-0">{action}</div>}
@@ -93,7 +94,7 @@ export function CardHeader({ title, subtitle, label, icon, action, className }: 
 }
 
 // ============================================
-// STAT CARD - xAI STYLE (BRIGHT LABELS)
+// STAT CARD - LIGHT WITH COLORED ICONS
 // ============================================
 
 export interface StatCardProps {
@@ -102,6 +103,7 @@ export interface StatCardProps {
   change?: number;
   changeLabel?: string;
   icon?: ReactNode;
+  iconBg?: string;
   trend?: 'up' | 'down' | 'neutral';
 }
 
@@ -111,6 +113,7 @@ export function StatCard({
   change,
   changeLabel,
   icon,
+  iconBg,
   trend,
 }: StatCardProps) {
   const getTrendFromChange = () => {
@@ -125,28 +128,23 @@ export function StatCard({
   const currentTrend = getTrendFromChange();
 
   const trendColors = {
-    up: 'text-emerald-400',
-    down: 'text-red-400',
-    neutral: 'text-neutral-500',
+    up: 'text-emerald-600',
+    down: 'text-red-500',
+    neutral: 'text-slate-500',
   };
 
   return (
-    <Card variant="default" hover className="relative">
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          {/* Label - BRIGHTER for visibility */}
-          <span className="font-mono text-[11px] text-neutral-400 tracking-[0.15em] uppercase">
-            [ {label} ]
+          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            {label}
           </span>
-          
-          {/* Value */}
-          <p className="font-mono text-3xl font-semibold text-white mt-3 tracking-tight">
+          <p className="text-3xl font-bold text-slate-900 mt-2 tracking-tight">
             {value}
           </p>
-          
-          {/* Change indicator */}
           {typeof change === 'number' && (
-            <div className={cn('flex items-center gap-1.5 mt-3 font-mono text-xs', trendColors[currentTrend])}>
+            <div className={cn('flex items-center gap-1.5 mt-2 text-xs font-medium', trendColors[currentTrend])}>
               {currentTrend === 'up' && (
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l9.2-9.2M17 17V7H7" />
@@ -157,26 +155,23 @@ export function StatCard({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 7l-9.2 9.2M7 7v10h10" />
                 </svg>
               )}
-              <span>
-                {change > 0 ? '+' : ''}{change.toFixed(1)}%
-              </span>
-              {changeLabel && <span className="text-neutral-500">{changeLabel}</span>}
+              <span>{change > 0 ? '+' : ''}{change.toFixed(1)}%</span>
+              {changeLabel && <span className="text-slate-400">{changeLabel}</span>}
             </div>
           )}
         </div>
-        
         {icon && (
-          <div className="p-2.5 rounded-md bg-white/[0.06] text-neutral-400">
+          <div className={cn("w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0", iconBg || "bg-blue-50 text-blue-600")}>
             {icon}
           </div>
         )}
       </div>
-    </Card>
+    </div>
   );
 }
 
 // ============================================
-// EMPTY STATE - xAI STYLE
+// EMPTY STATE
 // ============================================
 
 export interface EmptyStateProps {
@@ -190,12 +185,12 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
       {icon && (
-        <div className="w-12 h-12 rounded-lg bg-white/[0.03] flex items-center justify-center mb-4 text-neutral-500">
+        <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-4 text-slate-400">
           {icon}
         </div>
       )}
-      <h3 className="text-base font-medium text-white mb-1">{title}</h3>
-      {description && <p className="text-sm text-neutral-500 max-w-xs mb-5">{description}</p>}
+      <h3 className="text-base font-semibold text-slate-900 mb-1">{title}</h3>
+      {description && <p className="text-sm text-slate-500 max-w-xs mb-5">{description}</p>}
       {action}
     </div>
   );

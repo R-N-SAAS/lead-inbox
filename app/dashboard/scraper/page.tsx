@@ -25,6 +25,15 @@ const CONTACT_MODES = [
   { value: 'email', label: 'Nur E-Mail' },
 ];
 
+const RADIUS_OPTIONS = [
+  { value: 0, label: 'Nur Stadt' },
+  { value: 10, label: '10 km' },
+  { value: 25, label: '25 km' },
+  { value: 50, label: '50 km' },
+  { value: 75, label: '75 km' },
+  { value: 100, label: '100 km' },
+];
+
 // ── Zeitabschätzung ──
 function estimateDuration(targetLeads: number): string {
   const seconds = 60 + targetLeads * 12;
@@ -33,14 +42,12 @@ function estimateDuration(targetLeads: number): string {
   return `ca. ${(seconds / 3600).toFixed(1)} Stunden`;
 }
 
-// ── CSV Export Funktion ──
+// ── CSV Export ──
 function exportToCSV(leads: any[], filename: string = 'leads-export.csv') {
   if (!leads || leads.length === 0) return;
   
-  // CSV Header
   const headers = ['Name', 'E-Mail', 'Telefon', 'Website', 'Adresse', 'Status', 'Quelle', 'Erstellt'];
   
-  // CSV Rows
   const rows = leads.map(lead => [
     lead.name || '',
     lead.email || '',
@@ -52,17 +59,14 @@ function exportToCSV(leads: any[], filename: string = 'leads-export.csv') {
     lead.created_at ? new Date(lead.created_at).toLocaleDateString('de-DE') : '',
   ]);
   
-  // Combine
   const csvContent = [
     headers.join(';'),
     ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(';'))
   ].join('\n');
   
-  // BOM für Excel UTF-8
   const BOM = '\uFEFF';
   const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
   
-  // Download
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = filename;
@@ -105,6 +109,13 @@ const DownloadIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const MapPinIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+  </svg>
+);
+
 // ============================================
 // SCRAPER PAGE
 // ============================================
@@ -113,6 +124,7 @@ export default function ScraperPage() {
   // Form state
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('München');
+  const [radius, setRadius] = useState(25);
   const [contactMode, setContactMode] = useState('both');
   const [targetLeads, setTargetLeads] = useState(10);
   const [employees, setEmployees] = useState(false);
@@ -123,36 +135,36 @@ export default function ScraperPage() {
   const [result, setResult] = useState<{ 
     success: boolean; 
     count?: number; 
+    leads?: any[];
     error?: string; 
     errors?: string[];
-    leads?: any[];
   } | null>(null);
 
-  // ── Submit: sendet unsere 6 Parameter an /api/scraper ──
+  // ── Submit Handler ──
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setResult(null);
 
     try {
-      const response = await fetch('/api/scraper', {
+      const res = await fetch('/api/scraper', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          query,
+          query: query.trim(),
           location,
-          employees,
+          radius,
           contactMode,
-          websiteRequired,
           targetLeads,
-          plan: 'free',
+          employees,
+          websiteRequired,
         }),
       });
 
-      const data = await response.json();
+      const data = await res.json();
       setResult(data);
-    } catch (error: any) {
-      setResult({ success: false, error: error.message });
+    } catch (err: any) {
+      setResult({ success: false, error: err.message });
     } finally {
       setLoading(false);
     }
@@ -167,133 +179,143 @@ export default function ScraperPage() {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in max-w-4xl">
+    <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">Lead Scraper</h1>
-        <p className="text-neutral-400 mt-1">
-          Finde neue Leads automatisch aus öffentlichen Quellen
-        </p>
+        <h1 className="text-2xl font-bold text-slate-900">Lead Scraper</h1>
+        <p className="text-slate-500 mt-1">Finde neue Leads automatisch über Google Maps</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Form */}
-        <div className="lg:col-span-2">
-          <Card variant="glass">
-            <form onSubmit={handleSubmit} className="space-y-6">
-
-              {/* Query */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left Column: Form */}
+        <div>
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              
+              {/* Branche / Suchbegriff */}
               <div>
-                <label className="block text-sm font-medium text-neutral-300 mb-2">
-                  Suchbegriff *
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Branche / Suchbegriff
                 </label>
                 <input
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="z.B. Dachdecker, Maler, Elektriker..."
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
                   required
                   minLength={2}
-                  className="w-full px-4 py-3 bg-neutral-900/50 border border-white/10 rounded-xl text-white placeholder:text-neutral-600 focus:outline-none focus:border-white/30 transition-colors"
                 />
               </div>
 
-              {/* Location */}
+              {/* Stadt + Umkreis - nebeneinander */}
               <div>
-                <label className="block text-sm font-medium text-neutral-300 mb-2">
-                  Standort *
-                </label>
-                <select
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="w-full px-4 py-3 bg-neutral-900/50 border border-white/10 rounded-xl text-white focus:outline-none focus:border-white/30 transition-colors appearance-none cursor-pointer"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
-                    backgroundPosition: 'right 12px center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: '20px',
-                  }}
-                >
-                  {LOCATIONS.map((loc) => (
-                    <option key={loc} value={loc} className="bg-neutral-800">{loc}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Contact Mode */}
-              <div>
-                <label className="block text-sm font-medium text-neutral-300 mb-2">
-                  Kontaktdaten *
-                </label>
-                <div className="flex gap-2">
-                  {CONTACT_MODES.map((mode) => {
-                    const isSelected = contactMode === mode.value;
-                    return (
-                      <div
-                        key={mode.value}
-                        role="button"
-                        tabIndex={0}
-                        onClick={() => setContactMode(mode.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && setContactMode(mode.value)}
-                        className="flex-1 px-3 py-3 rounded-xl text-sm font-medium transition-all cursor-pointer text-center select-none"
-                        style={{
-                          backgroundColor: isSelected ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.03)',
-                          border: isSelected ? '2px solid rgba(255,255,255,0.5)' : '2px solid rgba(255,255,255,0.1)',
-                          color: isSelected ? '#ffffff' : '#a3a3a3',
-                        }}
-                      >
-                        {isSelected && (
-                          <span className="mr-2">✓</span>
-                        )}
-                        {mode.label}
-                      </div>
-                    );
-                  })}
-                </div>
-                <p className="text-xs text-neutral-500 mt-2">
-                  Ausgewählt: <span className="text-white font-medium">
-                    {CONTACT_MODES.find(m => m.value === contactMode)?.label}
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <span className="flex items-center gap-1.5">
+                    <MapPinIcon className="w-4 h-4 text-slate-500" />
+                    Standort & Umkreis
                   </span>
-                </p>
+                </label>
+                <div className="flex gap-3">
+                  {/* Stadt Dropdown */}
+                  <div className="flex-1">
+                    <select
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all appearance-none cursor-pointer"
+                    >
+                      {LOCATIONS.map((loc) => (
+                        <option key={loc} value={loc}>{loc}</option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  {/* Umkreis Dropdown */}
+                  <div className="w-[140px]">
+                    <select
+                      value={radius}
+                      onChange={(e) => setRadius(Number(e.target.value))}
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all appearance-none cursor-pointer"
+                    >
+                      {RADIUS_OPTIONS.map((opt) => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                
+                {/* Radius Info Text */}
+                {radius > 0 && (
+                  <p className="text-xs text-slate-500 mt-1.5">
+                    Suche in {location} + {radius} km Umkreis
+                  </p>
+                )}
               </div>
 
-              {/* Target Leads + Zeitabschätzung */}
+              {/* Kontaktmodus */}
               <div>
-                <label className="block text-sm font-medium text-neutral-300 mb-2">
-                  Anzahl Leads: <span className="text-white font-bold">{targetLeads}</span>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Kontaktmodus
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {CONTACT_MODES.map((mode) => (
+                    <button
+                      key={mode.value}
+                      type="button"
+                      onClick={() => setContactMode(mode.value)}
+                      className={cn(
+                        "px-3 py-2.5 rounded-xl text-sm font-medium transition-all border",
+                        contactMode === mode.value
+                          ? "bg-blue-600 text-white border-blue-600 shadow-sm"
+                          : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                      )}
+                    >
+                      {mode.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Anzahl Leads */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Anzahl Leads: <span className="text-slate-900 font-bold">{targetLeads}</span>
                 </label>
                 <input
                   type="range"
-                  min={1}
-                  max={50}
+                  min="1"
+                  max="50"
                   value={targetLeads}
                   onChange={(e) => setTargetLeads(parseInt(e.target.value))}
-                  className="w-full h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-white"
+                  className="w-full accent-blue-600"
                 />
-                <div className="flex justify-between text-xs text-neutral-500 mt-1">
+                <div className="flex justify-between text-xs text-slate-500 mt-1">
                   <span>1</span>
-                  <span>50 (Free Plan Max)</span>
+                  <span className="flex items-center gap-1">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {estimateDuration(targetLeads)}
+                  </span>
+                  <span>50</span>
                 </div>
-                <p className="text-xs text-neutral-500 mt-2">
-                  ⏱️ Geschätzte Dauer: {estimateDuration(targetLeads)}
-                  {targetLeads > 20 && (
-                    <span className="text-amber-400 ml-2">
-                      (länger bei viel Leads)
-                    </span>
-                  )}
-                </p>
+                {targetLeads > 20 && (
+                  <p className="text-xs text-amber-600 mt-1">
+                    ⚠️ Bei mehr als 20 Leads kann der Scraper mehrere Minuten brauchen
+                  </p>
+                )}
               </div>
 
-              {/* Options */}
-              <div className="flex flex-wrap gap-4">
+              {/* Optionen */}
+              <div className="flex flex-col gap-3">
                 <label className="flex items-center gap-3 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={employees}
                     onChange={(e) => setEmployees(e.target.checked)}
-                    className="w-5 h-5 rounded bg-neutral-800 border-neutral-600 text-white focus:ring-white/20"
+                    className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500/20"
                   />
-                  <span className="text-neutral-300">Mitarbeiterzahl erfassen</span>
+                  <span className="text-slate-700">Mitarbeiterzahl erfassen</span>
                 </label>
 
                 <label className="flex items-center gap-3 cursor-pointer">
@@ -301,9 +323,9 @@ export default function ScraperPage() {
                     type="checkbox"
                     checked={websiteRequired}
                     onChange={(e) => setWebsiteRequired(e.target.checked)}
-                    className="w-5 h-5 rounded bg-neutral-800 border-neutral-600 text-white focus:ring-white/20"
+                    className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500/20"
                   />
-                  <span className="text-neutral-300">Nur mit Website</span>
+                  <span className="text-slate-700">Nur mit Website</span>
                 </label>
               </div>
 
@@ -317,22 +339,40 @@ export default function ScraperPage() {
                 {loading ? 'Scraper läuft...' : 'Scraper starten'}
               </Button>
             </form>
-          </Card>
+          </div>
         </div>
 
-        {/* Right Column */}
+        {/* Right Column: Status + Info */}
         <div className="space-y-6">
 
-          {/* Success Result with CSV Export */}
-          {result?.success && (
-            <Card variant="glass" className="border-emerald-500/30">
+          {/* Loading Status */}
+          {loading && (
+            <div className="bg-white rounded-xl border border-blue-200 shadow-sm p-5">
+              <div className="flex items-center gap-3">
+                <SpinnerIcon className="w-6 h-6 text-blue-600" />
+                <div>
+                  <p className="font-semibold text-slate-900">Scraper läuft...</p>
+                  <p className="text-sm text-slate-500 mt-0.5">
+                    Geschätzte Dauer: {estimateDuration(targetLeads)}
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Suche: {query} in {location}{radius > 0 ? ` + ${radius} km` : ''}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Success Result */}
+          {result && result.success && (
+            <div className="bg-white rounded-xl border border-emerald-200 shadow-sm p-5">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
-                  <CheckIcon className="w-5 h-5 text-emerald-400" />
+                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                  <CheckIcon className="w-5 h-5 text-emerald-600" />
                 </div>
                 <div className="flex-1">
-                  <p className="font-semibold text-white">Erfolgreich!</p>
-                  <p className="text-sm text-neutral-400 mt-1">
+                  <p className="font-semibold text-slate-900">Erfolgreich!</p>
+                  <p className="text-sm text-slate-500 mt-1">
                     {result.count} neue Leads wurden gefunden und gespeichert.
                   </p>
                   
@@ -340,7 +380,7 @@ export default function ScraperPage() {
                   <div className="flex flex-col gap-2 mt-4">
                     <a
                       href="/dashboard/leads?source=scraper"
-                      className="text-sm text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-center transition-colors"
+                      className="text-sm text-blue-600 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg text-center transition-colors font-medium"
                     >
                       Leads ansehen →
                     </a>
@@ -348,8 +388,10 @@ export default function ScraperPage() {
                     {result.leads && result.leads.length > 0 && (
                       <div
                         role="button"
+                        tabIndex={0}
                         onClick={handleExportCSV}
-                        className="text-sm text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-4 py-2 rounded-lg text-center transition-colors cursor-pointer flex items-center justify-center gap-2"
+                        onKeyDown={(e) => e.key === 'Enter' && handleExportCSV()}
+                        className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-50 hover:bg-emerald-100 rounded-lg text-sm text-emerald-700 transition-colors cursor-pointer font-medium"
                       >
                         <DownloadIcon className="w-4 h-4" />
                         Als CSV exportieren
@@ -358,94 +400,66 @@ export default function ScraperPage() {
                   </div>
                 </div>
               </div>
-            </Card>
+            </div>
           )}
 
           {/* Error Result */}
           {result && !result.success && (
-            <Card variant="glass" className="border-red-500/30">
+            <div className="bg-white rounded-xl border border-red-200 shadow-sm p-5">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                  <AlertIcon className="w-5 h-5 text-red-400" />
+                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                  <AlertIcon className="w-5 h-5 text-red-600" />
                 </div>
                 <div>
-                  <p className="font-semibold text-white">Fehler</p>
+                  <p className="font-semibold text-slate-900">Fehler</p>
                   {result.errors ? (
-                    <ul className="text-sm text-red-400 mt-1 list-disc list-inside">
+                    <ul className="text-sm text-slate-600 mt-1 space-y-1">
                       {result.errors.map((err, i) => (
-                        <li key={i}>{err}</li>
+                        <li key={i}>• {err}</li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-sm text-red-400 mt-1">{result.error}</p>
+                    <p className="text-sm text-slate-600 mt-1">{result.error}</p>
                   )}
                 </div>
               </div>
-            </Card>
+            </div>
           )}
 
-          {/* Loading */}
-          {loading && (
-            <Card variant="glass" className="border-blue-500/30">
-              <div className="flex items-center gap-3">
-                <SpinnerIcon className="w-6 h-6 text-blue-400" />
-                <div>
-                  <p className="font-semibold text-white">Scraper läuft</p>
-                  <p className="text-sm text-neutral-400 mt-1">
-                    Geschätzt noch: {estimateDuration(targetLeads)}
-                  </p>
-                </div>
-              </div>
-            </Card>
-          )}
-
-          {/* Info */}
-          <Card variant="glass">
-            <h3 className="font-semibold text-white mb-3">Hinweise</h3>
-            <ul className="space-y-2 text-sm text-neutral-400">
-              <li className="flex items-start gap-2">
-                <span className="text-white">•</span>
-                Der Scraper durchsucht öffentliche Verzeichnisse
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-white">•</span>
-                Nur Leads mit gültigen Kontaktdaten werden gespeichert
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-white">•</span>
-                Free Plan: max. 50 Leads pro Suche
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-white">•</span>
-                Nach dem Scrapen: CSV Export verfügbar
-              </li>
-            </ul>
-          </Card>
+          {/* Info Card */}
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <h3 className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+              <span className="text-amber-500">💡</span> Tipps
+            </h3>
+            <div className="space-y-2 text-sm text-slate-600">
+              <p>• <strong className="text-slate-700">Branche</strong> so spezifisch wie möglich eingeben</p>
+              <p>• <strong className="text-slate-700">Umkreis</strong> erweitert die Suche auf umliegende Orte</p>
+              <p>• <strong className="text-slate-700">Nur Stadt</strong> sucht exakt in der gewählten Stadt</p>
+              <p>• Je mehr Leads, desto länger dauert die Suche</p>
+              <p>• Duplikate werden automatisch erkannt</p>
+            </div>
+          </div>
 
           {/* Plan Info */}
-          <Card variant="glass">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold text-white">Dein Plan</h3>
-              <span className="px-2 py-1 bg-white/10 rounded-full text-xs text-white uppercase tracking-wide">
-                Free
-              </span>
-            </div>
-            <div className="space-y-2 text-sm">
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <h3 className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+              <span className="text-blue-500">📊</span> Dein Plan
+            </h3>
+            <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-neutral-400">Leads pro Suche</span>
-                <span className="text-white">50</span>
+                <span className="text-slate-500">Plan</span>
+                <span className="text-slate-900 font-medium">Free</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-400">Suchen pro Tag</span>
-                <span className="text-white">5</span>
+                <span className="text-slate-500">Max. Leads pro Suche</span>
+                <span className="text-slate-900 font-medium">50</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Umkreis</span>
+                <span className="text-slate-900 font-medium">bis 100 km</span>
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-white/10">
-              <a href="/dashboard/settings" className="text-sm text-neutral-400 hover:text-white transition-colors">
-                Upgrade für mehr Leads →
-              </a>
-            </div>
-          </Card>
+          </div>
         </div>
       </div>
     </div>

@@ -19,7 +19,6 @@ export default function DashboardPage() {
 
   async function loadDashboardData() {
     try {
-      // Alle Leads laden
       const { data: leads, error } = await supabase
         .from('leads')
         .select('*')
@@ -28,11 +27,8 @@ export default function DashboardPage() {
       if (error) throw error;
 
       const allLeads = leads || [];
-
-      // Stats berechnen
       const now = new Date();
       const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-      const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
       const leadsThisWeek = allLeads.filter(l => new Date(l.created_at) > weekAgo);
       const leadsLastWeek = allLeads.filter(l => {
@@ -46,27 +42,19 @@ export default function DashboardPage() {
       const wonLeads = allLeads.filter(l => l.status === 'won').length;
       const lostLeads = allLeads.filter(l => l.status === 'lost').length;
 
-      // Conversion Rate berechnen
       const closedLeads = wonLeads + lostLeads;
       const conversionRate = closedLeads > 0 ? (wonLeads / closedLeads) * 100 : 0;
 
-      // Nach Status gruppieren
       const leadsByStatus = allLeads.reduce((acc, lead) => {
         acc[lead.status] = (acc[lead.status] || 0) + 1;
         return acc;
       }, {} as Record<string, number>);
 
-      // Nach Quelle gruppieren
       const leadsBySource = allLeads.reduce((acc, lead) => {
         const source = lead.source || 'unknown';
         acc[source] = (acc[source] || 0) + 1;
         return acc;
       }, {} as Record<string, number>);
-
-      // Prozentuale Änderung
-      const weeklyChange = leadsLastWeek.length > 0
-        ? ((leadsThisWeek.length - leadsLastWeek.length) / leadsLastWeek.length) * 100
-        : leadsThisWeek.length > 0 ? 100 : 0;
 
       setStats({
         totalLeads: allLeads.length,
@@ -75,10 +63,10 @@ export default function DashboardPage() {
         wonLeads,
         lostLeads,
         conversionRate,
-        averageResponseTime: 0, // TODO: Berechnen wenn conversations implementiert
+        averageResponseTime: 0,
         leadsByStatus,
         leadsBySource,
-        leadsOverTime: [], // TODO: Chart-Daten
+        leadsOverTime: [],
         recentLeads: allLeads.slice(0, 5),
       });
     } catch (error) {
@@ -98,9 +86,7 @@ export default function DashboardPage() {
         icon={<LeadsIcon className="w-8 h-8" />}
         title="Fehler beim Laden"
         description="Die Dashboard-Daten konnten nicht geladen werden."
-        action={
-          <Button onClick={() => loadDashboardData()}>Erneut versuchen</Button>
-        }
+        action={<Button onClick={() => loadDashboardData()}>Erneut versuchen</Button>}
       />
     );
   }
@@ -134,7 +120,7 @@ export default function DashboardPage() {
           label="Neue Leads"
           value={stats.newLeads}
           icon={<PlusIcon className="w-6 h-6" />}
-          iconBg="bg-cyan-50 text-cyan-600"
+          iconBg="bg-emerald-50 text-emerald-600"
         />
         <StatCard
           label="Qualifiziert"
@@ -156,14 +142,14 @@ export default function DashboardPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
             </svg>
           }
-          iconBg="bg-emerald-50 text-emerald-600"
+          iconBg="bg-purple-50 text-purple-600"
         />
       </div>
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Leads */}
-        <Card variant="glass" padding="none" className="lg:col-span-2">
+        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-slate-100">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-slate-900">Neueste Leads</h2>
@@ -186,9 +172,7 @@ export default function DashboardPage() {
               description="Richten Sie das Widget ein oder erstellen Sie Ihren ersten Lead manuell."
               action={
                 <Link href="/dashboard/widget">
-                  <Button variant="secondary" size="sm">
-                    Widget einrichten
-                  </Button>
+                  <Button variant="secondary" size="sm">Widget einrichten</Button>
                 </Link>
               }
             />
@@ -199,20 +183,19 @@ export default function DashboardPage() {
               ))}
             </div>
           )}
-        </Card>
+        </div>
 
         {/* Status Distribution */}
-        <Card variant="glass">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6">Status Verteilung</h2>
 
           {Object.keys(stats.leadsByStatus).length === 0 ? (
-            <p className="text-slate-500 text-center py-8">Keine Daten</p>
+            <p className="text-slate-400 text-center py-8">Keine Daten</p>
           ) : (
             <div className="space-y-4">
               {Object.entries(stats.leadsByStatus).map(([status, count]) => {
                 const percentage = stats.totalLeads > 0
-                  ? Math.round((count / stats.totalLeads) * 100)
-                  : 0;
+                  ? Math.round((count / stats.totalLeads) * 100) : 0;
 
                 const colors: Record<string, string> = {
                   new: 'bg-blue-500',
@@ -225,24 +208,16 @@ export default function DashboardPage() {
                 };
 
                 const labels: Record<string, string> = {
-                  new: 'Neu',
-                  replied: 'Beantwortet',
-                  qualified: 'Qualifiziert',
-                  offer_sent: 'Angebot',
-                  won: 'Gewonnen',
-                  lost: 'Verloren',
+                  new: 'Neu', replied: 'Beantwortet', qualified: 'Qualifiziert',
+                  offer_sent: 'Angebot', won: 'Gewonnen', lost: 'Verloren',
                   unsubscribed: 'Abgemeldet',
                 };
 
                 return (
                   <div key={status}>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-slate-700">
-                        {labels[status] || status}
-                      </span>
-                      <span className="text-sm text-slate-500">
-                        {count} ({percentage}%)
-                      </span>
+                      <span className="text-sm font-medium text-slate-700">{labels[status] || status}</span>
+                      <span className="text-sm text-slate-500">{count} ({percentage}%)</span>
                     </div>
                     <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
                       <div
@@ -255,43 +230,43 @@ export default function DashboardPage() {
               })}
             </div>
           )}
-        </Card>
+        </div>
       </div>
 
       {/* Quick Actions */}
-      <Card variant="glass">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
         <h2 className="text-lg font-semibold text-slate-900 mb-4">Schnellzugriff</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <QuickActionCard
             href="/dashboard/campaigns/new"
             icon={<CampaignsIcon className="w-5 h-5" />}
-            iconBg="bg-blue-100 text-blue-600"
+            color="blue"
             title="Kampagne erstellen"
             description="E-Mail-Sequenz starten"
           />
           <QuickActionCard
             href="/dashboard/widget"
             icon={<WidgetIcon className="w-5 h-5" />}
-            iconBg="bg-emerald-100 text-emerald-600"
+            color="green"
             title="Widget einbinden"
             description="Kontaktformular erstellen"
           />
           <QuickActionCard
             href="/dashboard/analytics"
             icon={<AnalyticsIcon className="w-5 h-5" />}
-            iconBg="bg-purple-100 text-purple-600"
+            color="purple"
             title="Analytics"
             description="Performance analysieren"
           />
           <QuickActionCard
             href="/dashboard/leads"
             icon={<LeadsIcon className="w-5 h-5" />}
-            iconBg="bg-amber-100 text-amber-600"
+            color="amber"
             title="Leads verwalten"
             description="Alle Kontakte anzeigen"
           />
         </div>
-      </Card>
+      </div>
     </div>
   );
 }
@@ -304,10 +279,10 @@ function LeadListItem({ lead }: { lead: Lead }) {
   return (
     <Link
       href={`/dashboard/leads/${lead.id}`}
-      className="flex items-center justify-between p-4 hover:bg-slate-50/50 transition-colors group"
+      className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors group"
     >
       <div className="flex items-center gap-4 min-w-0">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-600 font-medium flex-shrink-0">
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-slate-900 font-medium text-sm flex-shrink-0">
           {getInitials(lead.name, lead.email)}
         </div>
         <div className="min-w-0">
@@ -329,25 +304,34 @@ function LeadListItem({ lead }: { lead: Lead }) {
 }
 
 // ============================================
-// QUICK ACTION CARD
+// QUICK ACTION CARD - Vibrant colors
 // ============================================
+
+const colorMap = {
+  blue:   { bg: 'bg-blue-50',   text: 'text-blue-600',   border: 'hover:border-blue-200', hover: 'hover:bg-blue-50/50' },
+  green:  { bg: 'bg-emerald-50', text: 'text-emerald-600', border: 'hover:border-emerald-200', hover: 'hover:bg-emerald-50/50' },
+  purple: { bg: 'bg-purple-50',  text: 'text-purple-600',  border: 'hover:border-purple-200', hover: 'hover:bg-purple-50/50' },
+  amber:  { bg: 'bg-amber-50',   text: 'text-amber-600',   border: 'hover:border-amber-200', hover: 'hover:bg-amber-50/50' },
+  red:    { bg: 'bg-red-50',     text: 'text-red-600',     border: 'hover:border-red-200', hover: 'hover:bg-red-50/50' },
+};
 
 interface QuickActionCardProps {
   href: string;
   icon: React.ReactNode;
-  iconBg: string;
+  color: keyof typeof colorMap;
   title: string;
   description: string;
 }
 
-function QuickActionCard({ href, icon, iconBg, title, description }: QuickActionCardProps) {
+function QuickActionCard({ href, icon, color, title, description }: QuickActionCardProps) {
+  const c = colorMap[color];
   return (
     <Link href={href} className="group">
-      <div className="p-4 rounded-xl border border-slate-200 hover:border-blue-200 hover:bg-blue-50/30 transition-all">
-        <div className={`w-10 h-10 rounded-lg ${iconBg} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+      <div className={`p-4 rounded-xl border border-slate-200 ${c.border} ${c.hover} transition-all hover:shadow-md`}>
+        <div className={`w-10 h-10 rounded-lg ${c.bg} ${c.text} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
           {icon}
         </div>
-        <h3 className="font-medium text-slate-900 group-hover:text-blue-600 transition-colors">
+        <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
           {title}
         </h3>
         <p className="text-sm text-slate-500 mt-1">{description}</p>

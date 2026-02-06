@@ -167,7 +167,7 @@ export default function SettingsPage() {
 
         {/* Profile Tab */}
         <TabsContent value="profile" className="mt-6">
-          <Card variant="glass">
+          <Card variant="default">
             <h2 className="text-lg font-semibold text-slate-900 mb-6">Persönliche Daten</h2>
             
             <div className="grid gap-6 max-w-xl">
@@ -222,7 +222,7 @@ export default function SettingsPage() {
 
         {/* Organization Tab */}
         <TabsContent value="organization" className="mt-6">
-          <Card variant="glass">
+          <Card variant="default">
             <h2 className="text-lg font-semibold text-slate-900 mb-6">Unternehmensdaten</h2>
             
             <div className="grid gap-6 max-w-xl">
@@ -304,7 +304,7 @@ export default function SettingsPage() {
         {/* Integrations Tab */}
         <TabsContent value="integrations" className="mt-6 space-y-6">
           {/* API Key */}
-          <Card variant="glass">
+          <Card variant="default">
             <h2 className="text-lg font-semibold text-slate-900 mb-2">API-Schlüssel</h2>
             <p className="text-sm text-slate-500 mb-6">
               Verwenden Sie diesen Schlüssel für die API-Integration
@@ -332,7 +332,7 @@ export default function SettingsPage() {
           </Card>
 
           {/* Webhooks */}
-          <Card variant="glass">
+          <Card variant="default">
             <h2 className="text-lg font-semibold text-slate-900 mb-2">Webhooks</h2>
             <p className="text-sm text-slate-500 mb-6">
               Erhalten Sie Benachrichtigungen bei neuen Leads
@@ -357,7 +357,7 @@ export default function SettingsPage() {
           </Card>
 
           {/* Third-Party Integrations */}
-          <Card variant="glass">
+          <Card variant="default">
             <h2 className="text-lg font-semibold text-slate-900 mb-6">Verbundene Dienste</h2>
             
             <div className="space-y-4">
@@ -385,7 +385,7 @@ export default function SettingsPage() {
 
         {/* Notifications Tab */}
         <TabsContent value="notifications" className="mt-6">
-          <Card variant="glass">
+          <Card variant="default">
             <h2 className="text-lg font-semibold text-slate-900 mb-6">E-Mail-Benachrichtigungen</h2>
             
             <div className="space-y-4 max-w-xl">
@@ -415,7 +415,7 @@ export default function SettingsPage() {
 
         {/* Security Tab */}
         <TabsContent value="security" className="mt-6 space-y-6">
-          <Card variant="glass">
+          <Card variant="default">
             <h2 className="text-lg font-semibold text-slate-900 mb-6">Passwort ändern</h2>
             
             <p className="text-sm text-slate-500 mb-4">
@@ -427,7 +427,7 @@ export default function SettingsPage() {
             </Button>
           </Card>
 
-          <Card variant="glass">
+          <Card variant="default">
             <h2 className="text-lg font-semibold text-slate-900 mb-2">Aktive Sitzungen</h2>
             <p className="text-sm text-slate-500 mb-6">
               Geräte, auf denen Sie angemeldet sind

@@ -65,7 +65,7 @@ export default function Logo({ size = 'md', className = '', showText = true }: L
       </svg>
       
       {showText && (
-        <span className={`font-semibold text-white ${text}`}>
+        <span className={`font-semibold text-slate-900 ${text}`}>
           Lead Inbox
         </span>
       )}

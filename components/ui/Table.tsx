@@ -237,7 +237,7 @@ function Checkbox({ checked, indeterminate, onChange, onClick }: CheckboxProps) 
       className={cn(
         'w-5 h-5 rounded border-2 flex items-center justify-center transition-all',
         checked || indeterminate
-          ? 'bg-blue-500 border-blue-500 text-white'
+          ? 'bg-blue-500 border-blue-500 text-slate-900'
           : 'border-slate-300 hover:border-slate-400'
       )}
     >
@@ -337,7 +337,7 @@ export function Pagination({
               className={cn(
                 'min-w-[40px] h-10 px-3 rounded-lg text-sm font-medium transition-colors',
                 currentPage === page
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-blue-500 text-slate-900'
                   : 'text-slate-600 hover:bg-slate-100'
               )}
             >

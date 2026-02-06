@@ -126,7 +126,7 @@ export default function CampaignsPage() {
 
       {/* Campaigns List */}
       {campaigns.length === 0 ? (
-        <Card variant="glass">
+        <Card variant="default">
           <EmptyState
             icon={<CampaignsIcon className="w-8 h-8" />}
             title="Noch keine Kampagnen"
@@ -191,11 +191,11 @@ function CampaignCard({ campaign, onStatusToggle, onDelete }: CampaignCardProps)
   const replyRate = stats.sent > 0 ? ((stats.replied / stats.sent) * 100).toFixed(1) : '0';
 
   return (
-    <Card variant="glass" padding="none" hover>
+    <Card variant="default" padding="none" hover>
       <div className="p-5">
         <div className="flex items-start gap-4">
           {/* Icon */}
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white flex-shrink-0">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-slate-900 flex-shrink-0">
             <MailIcon className="w-6 h-6" />
           </div>
 

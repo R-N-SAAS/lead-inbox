@@ -207,7 +207,7 @@ function FunnelChart({ data }: { data: ChartDataPoint[] }) {
                     backgroundColor: item.color || '#3b82f6',
                   }}
                 >
-                  <span className="text-sm font-semibold text-white">
+                  <span className="text-sm font-semibold text-slate-900">
                     {item.value}
                   </span>
                 </div>

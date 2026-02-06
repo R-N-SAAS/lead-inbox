@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer-core';
 
 export async function createBrowser(headless = true) {
   return await puppeteer.launch({
-    executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    executablePath: '/usr/bin/chromium-browser',
     headless: headless ? 'new' : false,
     args: [
       '--no-sandbox',

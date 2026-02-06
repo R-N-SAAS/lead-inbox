@@ -71,7 +71,7 @@ function AddLeadDropdown({ onNewLead }: { onNewLead: () => void }) {
         {/* Main button */}
         <button
           onClick={onNewLead}
-          className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-l-lg transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-700 text-sm font-medium rounded-l-lg transition-colors"
         >
           <PlusIcon className="w-4 h-4" />
           Neuer Lead
@@ -79,7 +79,7 @@ function AddLeadDropdown({ onNewLead }: { onNewLead: () => void }) {
         {/* Dropdown toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="flex items-center px-2 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white border-l border-emerald-500 rounded-r-lg transition-colors"
+          className="flex items-center px-2 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-900 border-l border-emerald-500 rounded-r-lg transition-colors"
         >
           <svg className={cn('w-4 h-4 transition-transform', open && 'rotate-180')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -89,15 +89,15 @@ function AddLeadDropdown({ onNewLead }: { onNewLead: () => void }) {
 
       {/* Dropdown menu */}
       {open && (
-        <div className="absolute right-0 mt-2 w-52 bg-[#0a0a0a] border border-white/10 rounded-lg overflow-hidden shadow-xl z-50 animate-fade-in">
+        <div className="absolute right-0 mt-2 w-52 bg-white border border-white/10 rounded-lg overflow-hidden shadow-xl z-50 animate-fade-in">
           <button
             onClick={() => {
               onNewLead();
               setOpen(false);
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/[0.04] transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors"
           >
-            <svg className="w-4 h-4 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
             Manuell erstellen
@@ -105,9 +105,9 @@ function AddLeadDropdown({ onNewLead }: { onNewLead: () => void }) {
           <Link
             href="/dashboard/leads/import"
             onClick={() => setOpen(false)}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/[0.04] transition-colors border-t border-white/[0.06]"
+            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors border-t border-slate-200"
           >
-            <svg className="w-4 h-4 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
             </svg>
             CSV / Excel importieren
@@ -315,7 +315,7 @@ export default function LeadsPage() {
       </div>
 
       {/* Filters */}
-      <Card variant="glass" padding="md">
+      <Card variant="default" padding="md">
         <div className="flex flex-col lg:flex-row gap-4">
           {/* Search */}
           <div className="flex-1">
@@ -383,7 +383,7 @@ export default function LeadsPage() {
 
       {/* Bulk Actions Bar */}
       {selectedLeads.length > 0 && (
-        <div className="bg-slate-800 text-white p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-slide-in-up">
+        <div className="bg-slate-800 text-slate-900 p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-slide-in-up">
           <span className="font-medium">
             {selectedLeads.length} {selectedLeads.length === 1 ? 'Lead' : 'Leads'} ausgewählt
           </span>
@@ -401,7 +401,7 @@ export default function LeadsPage() {
               size="sm"
               onClick={() => handleBulkStatusUpdate('replied')}
               loading={bulkActionLoading}
-              className="!bg-white/10 !border-white/20 !text-white hover:!bg-white/20"
+              className="!bg-blue-50 !border-white/20 !text-slate-900 hover:!bg-blue-100"
             >
               Als beantwortet
             </Button>
@@ -418,7 +418,7 @@ export default function LeadsPage() {
               variant="ghost"
               size="sm"
               onClick={() => setSelectedLeads([])}
-              className="!text-white hover:!bg-white/10"
+              className="!text-slate-900 hover:!bg-blue-50"
             >
               Abbrechen
             </Button>
@@ -427,7 +427,7 @@ export default function LeadsPage() {
       )}
 
       {/* Leads Table */}
-      <Card variant="glass" padding="none">
+      <Card variant="default" padding="none">
         {filteredLeads.length === 0 ? (
           <EmptyState
             icon={
@@ -738,7 +738,7 @@ function Checkbox({
       className={cn(
         'w-5 h-5 rounded border-2 flex items-center justify-center transition-all',
         checked || indeterminate
-          ? 'bg-blue-500 border-blue-500 text-white'
+          ? 'bg-blue-500 border-blue-500 text-slate-900'
           : 'border-slate-300 hover:border-slate-400'
       )}
     >

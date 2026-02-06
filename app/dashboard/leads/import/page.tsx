@@ -343,14 +343,14 @@ export default function ImportPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Leads importieren</h1>
-          <p className="text-neutral-400 mt-1">
+          <h1 className="text-2xl font-bold text-slate-900">Leads importieren</h1>
+          <p className="text-slate-500 mt-1">
             CSV oder Excel-Datei hochladen und Leads importieren
           </p>
         </div>
         <Link
           href="/dashboard/leads"
-          className="px-4 py-2 text-sm text-neutral-400 hover:text-white border border-white/10 rounded-lg hover:border-white/20 transition-colors"
+          className="px-4 py-2 text-sm text-slate-500 hover:text-slate-900 border border-white/10 rounded-lg hover:border-white/20 transition-colors"
         >
           ← Zurück
         </Link>
@@ -367,23 +367,23 @@ export default function ImportPage() {
           return (
             <div key={label} className="flex items-center gap-2">
               {i > 0 && (
-                <div className={`w-8 h-px ${isDone ? 'bg-emerald-500' : 'bg-white/10'}`} />
+                <div className={`w-8 h-px ${isDone ? 'bg-emerald-500' : 'bg-blue-50'}`} />
               )}
               <div className="flex items-center gap-2">
                 <div
                   className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-mono ${
                     isDone
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                      ? 'bg-emerald-100 text-emerald-600 border border-emerald-200'
                       : isActive
-                      ? 'bg-white/10 text-white border border-white/20'
-                      : 'bg-white/[0.03] text-neutral-600 border border-white/[0.06]'
+                      ? 'bg-blue-50 text-slate-900 border border-white/20'
+                      : 'bg-slate-50 text-slate-400 border border-slate-200'
                   }`}
                 >
                   {isDone ? '✓' : i + 1}
                 </div>
                 <span
                   className={`text-xs font-medium ${
-                    isActive ? 'text-white' : isDone ? 'text-emerald-400' : 'text-neutral-600'
+                    isActive ? 'text-slate-900' : isDone ? 'text-emerald-600' : 'text-slate-400'
                   }`}
                 >
                   {label}
@@ -397,10 +397,10 @@ export default function ImportPage() {
       {/* Error Display */}
       {error && (
         <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
-          <p className="text-red-400 text-sm">{error}</p>
+          <p className="text-red-600 text-sm">{error}</p>
           <button
             onClick={() => setError('')}
-            className="text-red-400/60 text-xs mt-1 hover:text-red-400"
+            className="text-red-600/60 text-xs mt-1 hover:text-red-600"
           >
             Schließen
           </button>
@@ -417,7 +417,7 @@ export default function ImportPage() {
           className={`border-2 border-dashed rounded-xl p-16 text-center cursor-pointer transition-all ${
             dragOver
               ? 'border-emerald-500/50 bg-emerald-500/5'
-              : 'border-white/10 hover:border-white/20 bg-white/[0.02]'
+              : 'border-white/10 hover:border-white/20 bg-slate-50'
           }`}
         >
           <input
@@ -428,20 +428,20 @@ export default function ImportPage() {
             className="hidden"
           />
 
-          <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-white/[0.04] flex items-center justify-center">
-            <svg className="w-8 h-8 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-slate-100 flex items-center justify-center">
+            <svg className="w-8 h-8 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
             </svg>
           </div>
 
-          <p className="text-white font-medium mb-2">
+          <p className="text-slate-900 font-medium mb-2">
             Datei hierher ziehen oder klicken
           </p>
-          <p className="text-neutral-500 text-sm">
+          <p className="text-slate-500 text-sm">
             CSV, TSV oder Excel (.xlsx) — max. 10.000 Zeilen
           </p>
 
-          <div className="mt-8 flex items-center justify-center gap-6 text-xs text-neutral-600">
+          <div className="mt-8 flex items-center justify-center gap-6 text-xs text-slate-400">
             <span className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-500/40" />
               HubSpot Export
@@ -465,17 +465,17 @@ export default function ImportPage() {
       {/* ========== STEP 2: MAPPING ========== */}
       {step === 'mapping' && parsedData && (
         <div className="space-y-6">
-          <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-6">
+          <div className="bg-white border border-white/10 rounded-xl p-6">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-lg font-semibold text-white">Spalten zuordnen</h2>
-                <p className="text-neutral-500 text-sm mt-1">
+                <h2 className="text-lg font-semibold text-slate-900">Spalten zuordnen</h2>
+                <p className="text-slate-500 text-sm mt-1">
                   {fileName} — {parsedData.rows.length} Zeilen, {parsedData.headers.length} Spalten
                 </p>
               </div>
               <button
                 onClick={() => { setStep('upload'); setParsedData(null); setFileName(''); }}
-                className="text-xs text-neutral-500 hover:text-white transition-colors"
+                className="text-xs text-slate-500 hover:text-slate-900 transition-colors"
               >
                 Andere Datei
               </button>
@@ -485,7 +485,7 @@ export default function ImportPage() {
               {LEAD_FIELDS.map((field) => (
                 <div key={field.key} className="flex items-center gap-4">
                   <div className="w-40 flex-shrink-0">
-                    <span className="text-sm text-neutral-300">
+                    <span className="text-sm text-slate-700">
                       {field.label}
                     </span>
                   </div>
@@ -493,7 +493,7 @@ export default function ImportPage() {
                     <select
                       value={mapping[field.key as keyof ColumnMapping] || ''}
                       onChange={(e) => updateMapping(field.key as keyof ColumnMapping, e.target.value)}
-                      className="w-full bg-white/[0.04] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-white/20 appearance-none"
+                      className="w-full bg-slate-100 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:border-white/20 appearance-none"
                     >
                       <option value="">— Nicht zuordnen —</option>
                       {parsedData.headers.map((header) => (
@@ -503,7 +503,7 @@ export default function ImportPage() {
                       ))}
                     </select>
                   </div>
-                  <div className="w-48 flex-shrink-0 text-xs text-neutral-600 truncate">
+                  <div className="w-48 flex-shrink-0 text-xs text-slate-400 truncate">
                     {mapping[field.key as keyof ColumnMapping] && parsedData.rows[0]
                       ? `z.B. "${parsedData.rows[0][mapping[field.key as keyof ColumnMapping]!] || '—'}"`
                       : ''}
@@ -514,7 +514,7 @@ export default function ImportPage() {
 
             {!isMappingValid() && (
               <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <p className="text-amber-400 text-sm">Mindestens eine Spalte muss zugeordnet werden.</p>
+                <p className="text-amber-600 text-sm">Mindestens eine Spalte muss zugeordnet werden.</p>
               </div>
             )}
           </div>
@@ -522,14 +522,14 @@ export default function ImportPage() {
           <div className="flex justify-between">
             <button
               onClick={() => { setStep('upload'); setParsedData(null); }}
-              className="px-4 py-2.5 text-sm text-neutral-400 hover:text-white border border-white/10 rounded-lg hover:border-white/20 transition-colors"
+              className="px-4 py-2.5 text-sm text-slate-500 hover:text-slate-900 border border-white/10 rounded-lg hover:border-white/20 transition-colors"
             >
               ← Zurück
             </button>
             <button
               onClick={() => setStep('preview')}
               disabled={!isMappingValid()}
-              className="px-6 py-2.5 text-sm font-medium bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-6 py-2.5 text-sm font-medium bg-emerald-600 hover:bg-emerald-500 text-slate-900 rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
               Vorschau →
             </button>
@@ -540,13 +540,13 @@ export default function ImportPage() {
       {/* ========== STEP 3: PREVIEW ========== */}
       {step === 'preview' && parsedData && (
         <div className="space-y-6">
-          <div className="bg-[#0a0a0a] border border-white/10 rounded-xl overflow-hidden">
-            <div className="p-6 border-b border-white/[0.06]">
-              <h2 className="text-lg font-semibold text-white">Vorschau</h2>
-              <p className="text-neutral-500 text-sm mt-1">
+          <div className="bg-white border border-white/10 rounded-xl overflow-hidden">
+            <div className="p-6 border-b border-slate-200">
+              <h2 className="text-lg font-semibold text-slate-900">Vorschau</h2>
+              <p className="text-slate-500 text-sm mt-1">
                 {getMappedLeads().length} gültige Leads von {parsedData.rows.length} Zeilen
                 {parsedData.rows.length - getMappedLeads().length > 0 && (
-                  <span className="text-amber-400">
+                  <span className="text-amber-600">
                     {' '}— {parsedData.rows.length - getMappedLeads().length} leere Zeilen übersprungen
                   </span>
                 )}
@@ -556,10 +556,10 @@ export default function ImportPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
-                    <th className="text-left px-4 py-3 text-neutral-500 font-mono text-xs tracking-wider">#</th>
+                  <tr className="border-b border-slate-200">
+                    <th className="text-left px-4 py-3 text-slate-500 font-mono text-xs tracking-wider">#</th>
                     {LEAD_FIELDS.filter((f) => mapping[f.key as keyof ColumnMapping]).map((field) => (
-                      <th key={field.key} className="text-left px-4 py-3 text-neutral-500 font-mono text-xs tracking-wider uppercase">
+                      <th key={field.key} className="text-left px-4 py-3 text-slate-500 font-mono text-xs tracking-wider uppercase">
                         {field.label}
                       </th>
                     ))}
@@ -567,10 +567,10 @@ export default function ImportPage() {
                 </thead>
                 <tbody>
                   {getMappedLeads().slice(0, 10).map((lead, i) => (
-                    <tr key={i} className="border-b border-white/[0.04] hover:bg-white/[0.02]">
-                      <td className="px-4 py-3 text-neutral-600 font-mono text-xs">{i + 1}</td>
+                    <tr key={i} className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="px-4 py-3 text-slate-400 font-mono text-xs">{i + 1}</td>
                       {LEAD_FIELDS.filter((f) => mapping[f.key as keyof ColumnMapping]).map((field) => (
-                        <td key={field.key} className="px-4 py-3 text-neutral-300 truncate max-w-[200px]">
+                        <td key={field.key} className="px-4 py-3 text-slate-700 truncate max-w-[200px]">
                           {lead[field.key] || '—'}
                         </td>
                       ))}
@@ -581,7 +581,7 @@ export default function ImportPage() {
             </div>
 
             {getMappedLeads().length > 10 && (
-              <div className="px-4 py-3 text-center text-neutral-600 text-xs border-t border-white/[0.06]">
+              <div className="px-4 py-3 text-center text-slate-400 text-xs border-t border-slate-200">
                 ... und {getMappedLeads().length - 10} weitere Leads
               </div>
             )}
@@ -590,13 +590,13 @@ export default function ImportPage() {
           <div className="flex justify-between">
             <button
               onClick={() => setStep('mapping')}
-              className="px-4 py-2.5 text-sm text-neutral-400 hover:text-white border border-white/10 rounded-lg hover:border-white/20 transition-colors"
+              className="px-4 py-2.5 text-sm text-slate-500 hover:text-slate-900 border border-white/10 rounded-lg hover:border-white/20 transition-colors"
             >
               ← Zuordnung ändern
             </button>
             <button
               onClick={handleImport}
-              className="px-6 py-2.5 text-sm font-medium bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors"
+              className="px-6 py-2.5 text-sm font-medium bg-emerald-600 hover:bg-emerald-500 text-slate-900 rounded-lg transition-colors"
             >
               {getMappedLeads().length} Leads importieren →
             </button>
@@ -606,24 +606,24 @@ export default function ImportPage() {
 
       {/* ========== STEP 4: IMPORTING ========== */}
       {step === 'importing' && (
-        <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-12 text-center">
+        <div className="bg-white border border-white/10 rounded-xl p-12 text-center">
           <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-emerald-500/10 flex items-center justify-center">
-            <svg className="w-8 h-8 text-emerald-400 animate-spin" fill="none" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 text-emerald-600 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
             </svg>
           </div>
-          <p className="text-white font-medium text-lg mb-2">Leads werden importiert...</p>
-          <p className="text-neutral-500 text-sm mb-6">Bitte Fenster nicht schließen</p>
+          <p className="text-slate-900 font-medium text-lg mb-2">Leads werden importiert...</p>
+          <p className="text-slate-500 text-sm mb-6">Bitte Fenster nicht schließen</p>
 
           <div className="max-w-xs mx-auto">
-            <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
+            <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
               <div
                 className="h-full bg-emerald-500 rounded-full transition-all duration-300"
                 style={{ width: `${importProgress}%` }}
               />
             </div>
-            <p className="text-neutral-500 text-xs mt-2 font-mono">{importProgress}%</p>
+            <p className="text-slate-500 text-xs mt-2 font-mono">{importProgress}%</p>
           </div>
         </div>
       )}
@@ -631,34 +631,34 @@ export default function ImportPage() {
       {/* ========== STEP 5: DONE ========== */}
       {step === 'done' && importResult && (
         <div className="space-y-6">
-          <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-12 text-center">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="bg-white border border-white/10 rounded-xl p-12 text-center">
+            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-emerald-100 flex items-center justify-center">
+              <svg className="w-8 h-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <p className="text-white font-medium text-lg mb-2">Import abgeschlossen!</p>
+            <p className="text-slate-900 font-medium text-lg mb-2">Import abgeschlossen!</p>
 
             <div className="flex items-center justify-center gap-8 mt-6">
               <div className="text-center">
-                <p className="text-2xl font-mono font-bold text-emerald-400">{importResult.imported}</p>
-                <p className="text-xs text-neutral-500 mt-1">Importiert</p>
+                <p className="text-2xl font-mono font-bold text-emerald-600">{importResult.imported}</p>
+                <p className="text-xs text-slate-500 mt-1">Importiert</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-mono font-bold text-amber-400">{importResult.duplicates}</p>
-                <p className="text-xs text-neutral-500 mt-1">Duplikate</p>
+                <p className="text-2xl font-mono font-bold text-amber-600">{importResult.duplicates}</p>
+                <p className="text-xs text-slate-500 mt-1">Duplikate</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-mono font-bold text-red-400">{importResult.errors}</p>
-                <p className="text-xs text-neutral-500 mt-1">Fehler</p>
+                <p className="text-2xl font-mono font-bold text-red-600">{importResult.errors}</p>
+                <p className="text-xs text-slate-500 mt-1">Fehler</p>
               </div>
             </div>
 
             {importResult.errorDetails.length > 0 && (
               <div className="mt-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-left max-w-md mx-auto">
-                <p className="text-red-400 text-sm font-medium mb-2">Fehlerdetails:</p>
+                <p className="text-red-600 text-sm font-medium mb-2">Fehlerdetails:</p>
                 {importResult.errorDetails.map((err, i) => (
-                  <p key={i} className="text-red-400/70 text-xs">{err}</p>
+                  <p key={i} className="text-red-600/70 text-xs">{err}</p>
                 ))}
               </div>
             )}
@@ -672,13 +672,13 @@ export default function ImportPage() {
                 setFileName('');
                 setImportResult(null);
               }}
-              className="px-4 py-2.5 text-sm text-neutral-400 hover:text-white border border-white/10 rounded-lg hover:border-white/20 transition-colors"
+              className="px-4 py-2.5 text-sm text-slate-500 hover:text-slate-900 border border-white/10 rounded-lg hover:border-white/20 transition-colors"
             >
               Weitere Leads importieren
             </button>
             <Link
               href="/dashboard/leads"
-              className="px-6 py-2.5 text-sm font-medium bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors"
+              className="px-6 py-2.5 text-sm font-medium bg-emerald-600 hover:bg-emerald-500 text-slate-900 rounded-lg transition-colors"
             >
               Zu den Leads →
             </Link>

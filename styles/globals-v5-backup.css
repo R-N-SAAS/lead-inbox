@@ -1,0 +1,445 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: #0a0a0a;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ============================================
+   LEAD INBOX - DARK THEME v5
+   Fixes: Top bar consistent height,
+          Stat cards equal size
+   ============================================ */
+
+/* === SIDEBAR - Darkest === */
+aside,
+[class*="sidebar"],
+[class*="w-64"],
+[class*="w-56"] {
+  background-color: #050505 !important;
+}
+
+/* === TOP BAR - Fixed height, consistent === */
+header.sticky.top-0,
+header.h-14 {
+  background-color: #050505 !important;
+  border-color: #1a1a1a !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  max-height: 56px !important;
+  box-sizing: border-box !important;
+}
+
+/* Header inner container - stretch full width */
+header.sticky.top-0 > div,
+header.h-14 > div {
+  height: 100% !important;
+  max-height: 56px !important;
+}
+
+/* === MAIN CONTENT - Lighter === */
+main,
+.main-content,
+[class*="flex-1"],
+[class*="flex-grow"],
+[class*="p-6"],
+[class*="p-8"] {
+  background-color: #141414 !important;
+}
+
+/* === CARDS & CONTAINERS === */
+[class*="card"],
+[class*="Card"],
+.rounded-lg,
+.rounded-xl {
+  background-color: #1a1a1a !important;
+  border-color: #252525 !important;
+}
+
+/* === STAT CARDS - Equal size === */
+.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 > div {
+  min-height: 140px !important;
+  max-height: 140px !important;
+  height: 140px !important;
+  overflow: hidden !important;
+}
+
+/* Stat card inner - fixed layout */
+.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 > div .rounded-lg {
+  height: 100% !important;
+  min-height: 140px !important;
+  max-height: 140px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  padding: 20px 24px !important;
+  box-sizing: border-box !important;
+}
+
+/* Stat card bg - consistent dark background */
+.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 .bg-\[\#0a0a0a\] {
+  background-color: #0a0a0a !important;
+  height: 100% !important;
+}
+
+/* Stat card value - consistent spacing */
+.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 .font-mono.text-3xl {
+  margin-top: 8px !important;
+  margin-bottom: 0 !important;
+  line-height: 1.2 !important;
+}
+
+/* Stat card change/conversion text - compact */
+.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 .font-mono.text-xs {
+  margin-top: 6px !important;
+}
+
+/* === TABLE & LIST === */
+table,
+tbody,
+thead {
+  background-color: transparent !important;
+}
+
+thead tr,
+th {
+  background-color: #141414 !important;
+  border-color: #252525 !important;
+}
+
+tbody tr {
+  background-color: transparent !important;
+  border-color: #1f1f1f !important;
+}
+
+tbody tr:hover,
+a[href*="/leads/"]:hover {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* === INPUTS & SEARCH === */
+input,
+textarea,
+select,
+[class*="input"],
+[class*="Input"] {
+  background-color: #0a0a0a !important;
+  border-color: #252525 !important;
+  color: #e5e5e5 !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #404040 !important;
+  outline: none !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #666 !important;
+}
+
+/* === BUTTONS === */
+button[class*="primary"],
+[class*="btn-primary"],
+.bg-emerald-500,
+.bg-emerald-600 {
+  background-color: #10b981 !important;
+}
+
+button[class*="ghost"],
+button[class*="secondary"] {
+  background-color: transparent !important;
+  border-color: #303030 !important;
+}
+
+button[class*="ghost"]:hover,
+button[class*="secondary"]:hover {
+  background-color: #252525 !important;
+}
+
+/* === DROPDOWNS === */
+[class*="dropdown"],
+[class*="menu"],
+[class*="popover"],
+[role="menu"],
+[role="listbox"] {
+  background-color: #111111 !important;
+  border-color: #252525 !important;
+}
+
+[role="menuitem"]:hover,
+[role="option"]:hover {
+  background-color: #1f1f1f !important;
+}
+
+/* === MODALS === */
+[class*="modal"],
+[class*="dialog"],
+[role="dialog"] {
+  background-color: #111111 !important;
+  border-color: #252525 !important;
+}
+
+[class*="overlay"],
+[class*="backdrop"] {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* === BADGES & STATUS - STRONGER TEXT === */
+[class*="badge"],
+[class*="tag"],
+[class*="Badge"],
+[class*="Tag"],
+span[class*="rounded-full"],
+span[class*="rounded-md"],
+span[class*="px-2"],
+span[class*="px-3"] {
+  background-color: #252525 !important;
+  border-color: #404040 !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+}
+
+/* Scraper badge - green */
+.bg-emerald-500\/10,
+[class*="scraper"],
+span[class*="emerald"],
+span[class*="green"] {
+  background-color: rgba(16, 185, 129, 0.25) !important;
+  color: #34d399 !important;
+  font-weight: 500 !important;
+}
+
+/* Manuell badge - gray */
+span[class*="gray"],
+span[class*="slate"] {
+  background-color: #303030 !important;
+  color: #e5e5e5 !important;
+  font-weight: 500 !important;
+}
+
+/* Neu badge - blue */
+span[class*="blue"] {
+  background-color: rgba(59, 130, 246, 0.25) !important;
+  color: #60a5fa !important;
+  font-weight: 500 !important;
+}
+
+/* Status text general */
+.text-xs,
+.text-sm {
+  opacity: 1 !important;
+}
+
+/* === TEXT - NEVER BLACK ON DARK === */
+h1, h2, h3, h4, h5, h6 {
+  color: #f5f5f5 !important;
+}
+
+p, span, label, a, li, td, th, div {
+  color: inherit;
+}
+
+/* Override all slate/gray text classes that would be black/dark */
+.text-slate-900,
+.text-slate-800,
+.text-slate-700,
+.text-gray-900,
+.text-gray-800,
+.text-gray-700,
+.text-black,
+[class*="text-slate-9"],
+[class*="text-slate-8"],
+[class*="text-slate-7"],
+[class*="text-gray-9"],
+[class*="text-gray-8"],
+[class*="text-gray-7"] {
+  color: #f0f0f0 !important;
+}
+
+.text-slate-600,
+.text-slate-500,
+.text-gray-600,
+.text-gray-500,
+[class*="text-slate-6"],
+[class*="text-slate-5"],
+[class*="text-gray-6"],
+[class*="text-gray-5"] {
+  color: #a0a0a0 !important;
+}
+
+.text-slate-400,
+.text-slate-300,
+.text-gray-400,
+.text-gray-300 {
+  color: #888888 !important;
+}
+
+/* Links */
+a, .text-blue-600, .text-blue-700,
+[class*="text-blue-6"],
+[class*="text-blue-7"] {
+  color: #60a5fa !important;
+}
+
+a:hover {
+  color: #93bbfd !important;
+}
+
+/* Table text */
+table th {
+  color: #888888 !important;
+}
+
+table td {
+  color: #d4d4d4 !important;
+}
+
+table td a,
+table td p,
+table td span {
+  color: inherit !important;
+}
+
+/* General body text */
+p, span, label {
+  color: #b3b3b3 !important;
+}
+
+/* Ensure names/titles are always bright white */
+.font-medium,
+.font-semibold,
+.font-bold {
+  color: #f0f0f0 !important;
+}
+
+[class*="muted"],
+small {
+  color: #808080 !important;
+}
+
+/* Emerald/green text should stay green */
+.text-emerald-400, .text-emerald-500, .text-emerald-600,
+[class*="text-emerald"] {
+  color: #34d399 !important;
+}
+
+/* Red text should stay red */
+.text-red-400, .text-red-500,
+[class*="text-red"] {
+  color: #f87171 !important;
+}
+
+/* White text stays white */
+.text-white {
+  color: #ffffff !important;
+}
+
+/* Placeholder text */
+::placeholder {
+  color: #666 !important;
+}
+
+/* Dark background utility classes forced light */
+.bg-slate-100, .bg-slate-50, .bg-gray-100, .bg-gray-50,
+[class*="bg-slate-1"], [class*="bg-slate-5"],
+[class*="bg-gray-1"], [class*="bg-gray-5"] {
+  background-color: #1a1a1a !important;
+}
+
+/* Progress bar backgrounds */
+.bg-slate-100.rounded-full,
+.h-2.bg-slate-100 {
+  background-color: #252525 !important;
+}
+
+/* Icon background overrides */
+.bg-blue-50, .bg-cyan-50, .bg-amber-50, .bg-emerald-50,
+.bg-purple-50, .bg-blue-100, .bg-cyan-100, .bg-amber-100,
+.bg-emerald-100, .bg-purple-100,
+[class*="bg-blue-5"], [class*="bg-cyan-5"], [class*="bg-amber-5"],
+[class*="bg-blue-1"], [class*="bg-cyan-1"], [class*="bg-amber-1"],
+[class*="bg-emerald-1"], [class*="bg-purple-1"] {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Icon text colors in stat cards */
+.text-blue-600, .text-cyan-600, .text-amber-600,
+.text-emerald-600, .text-purple-600 {
+  color: #a0a0a0 !important;
+}
+
+/* Hover states on light backgrounds */
+.hover\:bg-slate-50\/50:hover,
+.hover\:bg-blue-50\/30:hover,
+[class*="hover:bg-slate"]:hover,
+[class*="hover:bg-blue-5"]:hover {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Border overrides for light borders */
+.border-slate-100, .border-slate-200, .border-slate-300,
+[class*="border-slate-1"], [class*="border-slate-2"],
+.divide-slate-100 > * + * {
+  border-color: #252525 !important;
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* === BORDERS === */
+hr,
+[class*="divider"] {
+  border-color: #252525 !important;
+}
+
+/* === CAMPAIGN ACTIVE === */
+[class*="campaign"][class*="active"],
+.bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+}
+
+/* === PROGRESS BAR === */
+[class*="progress"],
+[role="progressbar"] {
+  background-color: #1a1a1a !important;
+}
+
+[class*="progress"] > div,
+[role="progressbar"] > div {
+  background-color: #10b981 !important;
+}

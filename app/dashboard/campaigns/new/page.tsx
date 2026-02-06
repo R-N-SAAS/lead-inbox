@@ -172,7 +172,7 @@ export default function NewCampaignPage() {
               className={cn(
                 'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all',
                 index === currentStep
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-blue-500 text-slate-900'
                   : index < currentStep
                   ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
                   : 'bg-slate-100 text-slate-400'
@@ -181,7 +181,7 @@ export default function NewCampaignPage() {
               {index < currentStep ? (
                 <CheckIcon className="w-4 h-4" />
               ) : (
-                <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs">
+                <span className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center text-xs">
                   {step.icon}
                 </span>
               )}
@@ -205,7 +205,7 @@ export default function NewCampaignPage() {
       )}
 
       {/* Step Content */}
-      <Card variant="glass" padding="lg">
+      <Card variant="default" padding="lg">
         {/* Step 1: Basics */}
         {currentStep === 0 && (
           <BasicsStep formData={formData} updateForm={updateForm} />

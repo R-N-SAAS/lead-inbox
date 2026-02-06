@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer-core';
 
 const browser = await puppeteer.launch({
-  executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  executablePath: '/usr/bin/chromium-browser',
   headless: false,
   args: ['--window-size=1920,1080'],
   defaultViewport: { width: 1920, height: 1080 }
