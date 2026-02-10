@@ -1,61 +1,30 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
-  const supabase = createMiddlewareClient({ req, res });
+const PUBLIC_PATHS = ['/login', '/api/auth', '/api/callback'];
 
-  // Refresh session if expired
-  const { data: { session } } = await supabase.auth.getSession();
+export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
 
-  // Protected routes
-  const protectedPaths = ['/dashboard', '/onboarding'];
-  const isProtectedPath = protectedPaths.some(path => 
-    req.nextUrl.pathname.startsWith(path)
-  );
-
-  // Auth routes (should redirect to dashboard if logged in)
-  const authPaths = ['/login', '/register'];
-  const isAuthPath = authPaths.some(path => 
-    req.nextUrl.pathname.startsWith(path)
-  );
-
-  // Public paths that don't need any auth check
-  const publicPaths = ['/api', '/widget', '/_next', '/favicon'];
-  const isPublicPath = publicPaths.some(path => 
-    req.nextUrl.pathname.startsWith(path)
-  );
-
-  if (isPublicPath) {
-    return res;
+  // Allow public routes
+  if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
+    return NextResponse.next();
   }
 
-  // Redirect to login if accessing protected route without session
-  if (isProtectedPath && !session) {
-    const redirectUrl = new URL('/login', req.url);
-    redirectUrl.searchParams.set('redirect', req.nextUrl.pathname);
-    return NextResponse.redirect(redirectUrl);
+  // Allow static assets
+  if (pathname.startsWith('/_next') || pathname.startsWith('/favicon')) {
+    return NextResponse.next();
   }
 
-  // Redirect to dashboard if accessing auth routes with session
-  if (isAuthPath && session) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+  // Check session cookie
+  const session = req.cookies.get('lg_session');
+  if (!session) {
+    const loginUrl = new URL('/login', req.url);
+    return NextResponse.redirect(loginUrl);
   }
 
-  return res;
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     * - api routes that should be public
-     */
-    '/((?!_next/static|_next/image|favicon.ico|public|widget).*)',
-  ],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };
